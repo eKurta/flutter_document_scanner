@@ -26,18 +26,20 @@ import 'package:flutter_document_scanner/src/utils/take_photo_document_style.dar
 class DocumentScanner extends StatelessWidget {
   /// Create a main page with properties and methods
   /// to manage the document scanner.
-  const DocumentScanner(
-      {super.key,
-      this.controller,
-      this.generalStyles = const GeneralStyles(),
-      this.pageTransitionBuilder,
-      this.initialCameraLensDirection = CameraLensDirection.back,
-      this.resolutionCamera = ResolutionPreset.high,
-      this.takePhotoDocumentStyle = const TakePhotoDocumentStyle(),
-      this.cropPhotoDocumentStyle = const CropPhotoDocumentStyle(),
-      this.editPhotoDocumentStyle = const EditPhotoDocumentStyle(),
-      required this.onSave,
-      required this.onAddMore});
+  const DocumentScanner({
+    super.key,
+    this.controller,
+    this.generalStyles = const GeneralStyles(),
+    this.pageTransitionBuilder,
+    this.initialCameraLensDirection = CameraLensDirection.back,
+    this.resolutionCamera = ResolutionPreset.high,
+    this.takePhotoDocumentStyle = const TakePhotoDocumentStyle(),
+    this.cropPhotoDocumentStyle = const CropPhotoDocumentStyle(),
+    this.editPhotoDocumentStyle = const EditPhotoDocumentStyle(),
+    required this.onSave,
+    required this.onAddMore,
+    required this.initPhotos,
+  });
 
   /// Controller to execute the different functionalities
   /// using the [DocumentScannerController]
@@ -73,7 +75,11 @@ class DocumentScanner extends StatelessWidget {
   /// It will return it as [Uint8List].
   final OnSave onSave;
 
+  ///On add more button pressed
   final OnAddMore onAddMore;
+
+  ///Photos user wants to add to the document before the currently scanned document
+  final List<Uint8List> initPhotos;
 
   @override
   Widget build(BuildContext context) {
@@ -183,6 +189,7 @@ class DocumentScanner extends StatelessWidget {
               onAddMore: onAddMore,
               initialCameraLensDirection: initialCameraLensDirection,
               resolutionCamera: resolutionCamera,
+              initPhotos: initPhotos,
             ),
           ),
         ),
@@ -192,17 +199,17 @@ class DocumentScanner extends StatelessWidget {
 }
 
 class _View extends StatelessWidget {
-  const _View({
-    this.pageTransitionBuilder,
-    required this.generalStyles,
-    required this.takePhotoDocumentStyle,
-    required this.cropPhotoDocumentStyle,
-    required this.editPhotoDocumentStyle,
-    required this.onSave,
-    required this.onAddMore,
-    required this.initialCameraLensDirection,
-    required this.resolutionCamera,
-  });
+  const _View(
+      {this.pageTransitionBuilder,
+      required this.generalStyles,
+      required this.takePhotoDocumentStyle,
+      required this.cropPhotoDocumentStyle,
+      required this.editPhotoDocumentStyle,
+      required this.onSave,
+      required this.onAddMore,
+      required this.initialCameraLensDirection,
+      required this.resolutionCamera,
+      required this.initPhotos});
 
   final AnimatedSwitcherTransitionBuilder? pageTransitionBuilder;
   final GeneralStyles generalStyles;
@@ -213,6 +220,7 @@ class _View extends StatelessWidget {
   final CameraLensDirection initialCameraLensDirection;
   final ResolutionPreset resolutionCamera;
   final OnAddMore onAddMore;
+  final List<Uint8List> initPhotos;
 
   @override
   Widget build(BuildContext context) {
@@ -252,6 +260,7 @@ class _View extends StatelessWidget {
               editPhotoDocumentStyle: editPhotoDocumentStyle,
               onSave: onSave,
               onAddMore: onAddMore,
+              initPhotos: initPhotos,
             );
             break;
         }

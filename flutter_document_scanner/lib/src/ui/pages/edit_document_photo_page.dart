@@ -23,11 +23,13 @@ import 'package:flutter_document_scanner/src/utils/model_utils.dart';
 /// Page to edit a photo
 class EditDocumentPhotoPage extends StatelessWidget {
   /// Create a page with style
-  const EditDocumentPhotoPage(
-      {super.key,
-      required this.editPhotoDocumentStyle,
-      required this.onSave,
-      required this.onAddMore});
+  const EditDocumentPhotoPage({
+    super.key,
+    required this.editPhotoDocumentStyle,
+    required this.onSave,
+    required this.onAddMore,
+    required this.initPhotos,
+  });
 
   /// Style of the page
   final EditPhotoDocumentStyle editPhotoDocumentStyle;
@@ -37,6 +39,9 @@ class EditDocumentPhotoPage extends StatelessWidget {
 
   /// Calback to add more photos
   final OnAddMore onAddMore;
+
+  ///Photos that user wants to add before the currently scanned photo
+  final List<Uint8List> initPhotos;
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +64,7 @@ class EditDocumentPhotoPage extends StatelessWidget {
               editPhotoDocumentStyle: editPhotoDocumentStyle,
               onSave: onSave,
               onAddMore: onAddMore,
+              initPhotos: initPhotos,
             ),
           );
         },
@@ -75,16 +81,20 @@ class EditDocumentPhotoPage extends StatelessWidget {
 }
 
 class _EditView extends StatelessWidget {
-  const _EditView(
-      {required this.editPhotoDocumentStyle,
-      required this.onSave,
-      required this.onAddMore});
+  const _EditView({
+    required this.editPhotoDocumentStyle,
+    required this.onSave,
+    required this.onAddMore,
+    required this.initPhotos,
+  });
 
   final EditPhotoDocumentStyle editPhotoDocumentStyle;
   final OnSave onSave;
 
   /// Calback to add more photos
   final OnAddMore onAddMore;
+
+  final List<Uint8List> initPhotos;
 
   @override
   Widget build(BuildContext context) {
@@ -155,8 +165,12 @@ class _EditView extends StatelessWidget {
                   );
                 }
 
-                return Image.memory(
-                  image,
+                return Wrap(
+                  children: initPhotos
+                      .map(
+                        Image.memory,
+                      )
+                      .toList(),
                 );
               },
             ),
