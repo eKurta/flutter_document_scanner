@@ -166,11 +166,14 @@ class _EditView extends StatelessWidget {
                 }
 
                 return Wrap(
-                  children: initPhotos
-                      .map(
-                        Image.memory,
-                      )
-                      .toList(),
+                  spacing: 16,
+                  runSpacing: 16,
+                  children: [
+                    ...initPhotos.map(
+                      Image.memory,
+                    ),
+                    Image.memory(image),
+                  ],
                 );
               },
             ),
