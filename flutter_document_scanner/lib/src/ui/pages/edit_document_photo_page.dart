@@ -23,17 +23,20 @@ import 'package:flutter_document_scanner/src/utils/model_utils.dart';
 /// Page to edit a photo
 class EditDocumentPhotoPage extends StatelessWidget {
   /// Create a page with style
-  const EditDocumentPhotoPage({
-    super.key,
-    required this.editPhotoDocumentStyle,
-    required this.onSave,
-  });
+  const EditDocumentPhotoPage(
+      {super.key,
+      required this.editPhotoDocumentStyle,
+      required this.onSave,
+      required this.onAddMore});
 
   /// Style of the page
   final EditPhotoDocumentStyle editPhotoDocumentStyle;
 
   /// Callback to save the photo
   final OnSave onSave;
+
+  /// Calback to add more photos
+  final OnAddMore onAddMore;
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +58,7 @@ class EditDocumentPhotoPage extends StatelessWidget {
             child: _EditView(
               editPhotoDocumentStyle: editPhotoDocumentStyle,
               onSave: onSave,
+              onAddMore: onAddMore,
             ),
           );
         },
@@ -71,13 +75,16 @@ class EditDocumentPhotoPage extends StatelessWidget {
 }
 
 class _EditView extends StatelessWidget {
-  const _EditView({
-    required this.editPhotoDocumentStyle,
-    required this.onSave,
-  });
+  const _EditView(
+      {required this.editPhotoDocumentStyle,
+      required this.onSave,
+      required this.onAddMore});
 
   final EditPhotoDocumentStyle editPhotoDocumentStyle;
   final OnSave onSave;
+
+  /// Calback to add more photos
+  final OnAddMore onAddMore;
 
   @override
   Widget build(BuildContext context) {
@@ -156,8 +163,15 @@ class _EditView extends StatelessWidget {
           ),
 
           // * Default App Bar
-          AppBarEditPhoto(
-            editPhotoDocumentStyle: editPhotoDocumentStyle,
+          BlocSelector<EditBloc, EditState, Uint8List?>(
+            selector: (state) => state.image,
+            builder: (context, image) {
+              return AppBarEditPhoto(
+                editPhotoDocumentStyle: editPhotoDocumentStyle,
+                onAddMore: onAddMore,
+                image: image,
+              );
+            },
           ),
 
           // * Default Bottom Bar

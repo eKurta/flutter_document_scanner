@@ -26,18 +26,18 @@ import 'package:flutter_document_scanner/src/utils/take_photo_document_style.dar
 class DocumentScanner extends StatelessWidget {
   /// Create a main page with properties and methods
   /// to manage the document scanner.
-  const DocumentScanner({
-    super.key,
-    this.controller,
-    this.generalStyles = const GeneralStyles(),
-    this.pageTransitionBuilder,
-    this.initialCameraLensDirection = CameraLensDirection.back,
-    this.resolutionCamera = ResolutionPreset.high,
-    this.takePhotoDocumentStyle = const TakePhotoDocumentStyle(),
-    this.cropPhotoDocumentStyle = const CropPhotoDocumentStyle(),
-    this.editPhotoDocumentStyle = const EditPhotoDocumentStyle(),
-    required this.onSave,
-  });
+  const DocumentScanner(
+      {super.key,
+      this.controller,
+      this.generalStyles = const GeneralStyles(),
+      this.pageTransitionBuilder,
+      this.initialCameraLensDirection = CameraLensDirection.back,
+      this.resolutionCamera = ResolutionPreset.high,
+      this.takePhotoDocumentStyle = const TakePhotoDocumentStyle(),
+      this.cropPhotoDocumentStyle = const CropPhotoDocumentStyle(),
+      this.editPhotoDocumentStyle = const EditPhotoDocumentStyle(),
+      required this.onSave,
+      required this.onAddMore});
 
   /// Controller to execute the different functionalities
   /// using the [DocumentScannerController]
@@ -72,6 +72,8 @@ class DocumentScanner extends StatelessWidget {
   /// After performing the whole process of capturing the document
   /// It will return it as [Uint8List].
   final OnSave onSave;
+
+  final OnAddMore onAddMore;
 
   @override
   Widget build(BuildContext context) {
@@ -178,6 +180,7 @@ class DocumentScanner extends StatelessWidget {
               cropPhotoDocumentStyle: cropPhotoDocumentStyle,
               editPhotoDocumentStyle: editPhotoDocumentStyle,
               onSave: onSave,
+              onAddMore: onAddMore,
               initialCameraLensDirection: initialCameraLensDirection,
               resolutionCamera: resolutionCamera,
             ),
@@ -196,6 +199,7 @@ class _View extends StatelessWidget {
     required this.cropPhotoDocumentStyle,
     required this.editPhotoDocumentStyle,
     required this.onSave,
+    required this.onAddMore,
     required this.initialCameraLensDirection,
     required this.resolutionCamera,
   });
@@ -208,6 +212,7 @@ class _View extends StatelessWidget {
   final OnSave onSave;
   final CameraLensDirection initialCameraLensDirection;
   final ResolutionPreset resolutionCamera;
+  final OnAddMore onAddMore;
 
   @override
   Widget build(BuildContext context) {
@@ -246,6 +251,7 @@ class _View extends StatelessWidget {
             page = EditDocumentPhotoPage(
               editPhotoDocumentStyle: editPhotoDocumentStyle,
               onSave: onSave,
+              onAddMore: onAddMore,
             );
             break;
         }

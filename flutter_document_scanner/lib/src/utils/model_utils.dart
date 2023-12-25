@@ -12,3 +12,6 @@ const valueNull = 'valueNull';
 
 /// Define how the saving function is to be used
 typedef OnSave = void Function(Uint8List imageBytes);
+
+/// Define how the add more function is to be used
+typedef OnAddMore = void Function(Uint8List imageBytes);

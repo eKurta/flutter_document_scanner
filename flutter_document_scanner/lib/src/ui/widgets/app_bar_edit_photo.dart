@@ -6,19 +6,28 @@
 // https://opensource.org/licenses/MIT.
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_document_scanner/flutter_document_scanner.dart';
+import 'package:flutter_document_scanner/src/utils/model_utils.dart';
 
 /// Default AppBar of the Edit Photo page
 class AppBarEditPhoto extends StatelessWidget {
   /// Create a widget with style
-  const AppBarEditPhoto({
-    super.key,
-    required this.editPhotoDocumentStyle,
-  });
+  const AppBarEditPhoto(
+      {super.key,
+      required this.editPhotoDocumentStyle,
+      required this.onAddMore,
+      required this.image});
 
   /// The style of the page
   final EditPhotoDocumentStyle editPhotoDocumentStyle;
+
+  ///On add more button pressed user decides what happens
+  final OnAddMore onAddMore;
+
+  ///Cropped image that the user can see on the creen
+  final Uint8List? image;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +45,6 @@ class AppBarEditPhoto extends StatelessWidget {
         ),
         color: Colors.black.withOpacity(0.3),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
               onPressed: () =>
@@ -48,7 +56,20 @@ class AppBarEditPhoto extends StatelessWidget {
               ),
               color: Colors.white,
             ),
-
+            const Spacer(),
+            if (image != null)
+              TextButton(
+                onPressed: () => onAddMore(image!),
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.white,
+                ),
+                child: const Text(
+                  'Add more',
+                ),
+              ),
+            const SizedBox(
+              width: 16,
+            ),
             // * Crop photo
             TextButton(
               onPressed: () =>
