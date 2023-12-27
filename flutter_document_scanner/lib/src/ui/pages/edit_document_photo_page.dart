@@ -170,32 +170,35 @@ class _EditView extends StatelessWidget {
                     Image.memory(image),
                     Positioned(
                       bottom: 92,
-                      child: Row(
-                        children: [
-                          ...initPhotos.map((image) {
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 4,
-                                vertical: 8,
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(4),
-                                child: Container(
-                                  height: 180,
-                                  width: 120,
-                                  decoration: BoxDecoration(
-                                    border:
-                                        Border.all(color: Colors.grey.shade600),
-                                    borderRadius: BorderRadius.circular(4),
-                                    image: DecorationImage(
-                                      image: Image.memory(image).image,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            ...initPhotos.map((image) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 4,
+                                  vertical: 8,
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(4),
+                                  child: Container(
+                                    height: 180,
+                                    width: 120,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Colors.grey.shade600),
+                                      borderRadius: BorderRadius.circular(4),
+                                      image: DecorationImage(
+                                        image: Image.memory(image).image,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            );
-                          }),
-                        ],
+                              );
+                            }),
+                          ],
+                        ),
                       ),
                     )
                   ],
