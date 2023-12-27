@@ -169,7 +169,7 @@ class _EditView extends StatelessWidget {
                   children: [
                     Image.memory(image),
                     Positioned(
-                      bottom: 66,
+                      bottom: 100,
                       child: Row(
                         children: [
                           ...initPhotos.map((image) {
@@ -180,16 +180,16 @@ class _EditView extends StatelessWidget {
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(4),
-                                child: DecoratedBox(
+                                child: Container(
+                                  height: 180,
+                                  width: 120,
                                   decoration: BoxDecoration(
                                     border:
                                         Border.all(color: Colors.grey.shade600),
                                     borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  child: Image.memory(
-                                    image,
-                                    height: 180,
-                                    width: 120,
+                                    image: DecorationImage(
+                                      image: Image.memory(image).image,
+                                    ),
                                   ),
                                 ),
                               ),
