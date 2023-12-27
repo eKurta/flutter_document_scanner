@@ -165,14 +165,32 @@ class _EditView extends StatelessWidget {
                   );
                 }
 
-                return Wrap(
-                  spacing: 16,
-                  runSpacing: 16,
+                return Stack(
                   children: [
-                    ...initPhotos.map(
-                      Image.memory,
-                    ),
                     Image.memory(image),
+                    Positioned(
+                      bottom: 0,
+                      child: Row(
+                        children: [
+                          ...initPhotos.map((image) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 4,
+                                vertical: 8,
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(4),
+                                child: Image.memory(
+                                  image,
+                                  height: 200,
+                                  width: 120,
+                                ),
+                              ),
+                            );
+                          }),
+                        ],
+                      ),
+                    )
                   ],
                 );
               },
