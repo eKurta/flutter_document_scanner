@@ -169,7 +169,7 @@ class _EditView extends StatelessWidget {
                   children: [
                     Image.memory(image),
                     Positioned(
-                      bottom: 0,
+                      bottom: 32,
                       child: Row(
                         children: [
                           ...initPhotos.map((image) {
