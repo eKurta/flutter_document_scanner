@@ -5,6 +5,8 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+// ignore_for_file: must_be_immutable
+
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -80,8 +82,8 @@ class EditDocumentPhotoPage extends StatelessWidget {
   }
 }
 
-class _EditView extends StatelessWidget {
-  const _EditView({
+class _EditView extends StatefulWidget {
+  _EditView({
     required this.editPhotoDocumentStyle,
     required this.onSave,
     required this.onAddMore,
@@ -94,8 +96,13 @@ class _EditView extends StatelessWidget {
   /// Calback to add more photos
   final OnAddMore onAddMore;
 
-  final List<Uint8List> initPhotos;
+  List<Uint8List> initPhotos;
 
+  @override
+  State<_EditView> createState() => _EditViewState();
+}
+
+class _EditViewState extends State<_EditView> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
@@ -130,7 +137,7 @@ class _EditView extends StatelessWidget {
                       isSuccess: true,
                     ),
                   );
-              onSave(image);
+              widget.onSave(image);
             }
           },
         ),
@@ -144,6 +151,7 @@ class _EditView extends StatelessWidget {
                       isSuccess: true,
                     ),
                   );
+              widget.initPhotos.add(state.image!);
             }
           },
         ),
@@ -152,10 +160,10 @@ class _EditView extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           Positioned(
-            top: editPhotoDocumentStyle.top,
-            left: editPhotoDocumentStyle.left,
-            right: editPhotoDocumentStyle.right,
-            bottom: editPhotoDocumentStyle.bottom,
+            top: widget.editPhotoDocumentStyle.top,
+            left: widget.editPhotoDocumentStyle.left,
+            right: widget.editPhotoDocumentStyle.right,
+            bottom: widget.editPhotoDocumentStyle.bottom,
             child: BlocSelector<EditBloc, EditState, Uint8List?>(
               selector: (state) => state.image,
               builder: (context, image) {
@@ -174,7 +182,7 @@ class _EditView extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           children: [
-                            ...initPhotos.map((image) {
+                            ...widget.initPhotos.map((image) {
                               return Padding(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 4,
@@ -182,15 +190,18 @@ class _EditView extends StatelessWidget {
                                 ),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(4),
-                                  child: Container(
-                                    height: 180,
-                                    width: 120,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: Colors.grey.shade600),
-                                      borderRadius: BorderRadius.circular(4),
-                                      image: DecorationImage(
-                                        image: Image.memory(image).image,
+                                  child: GestureDetector(
+                                    onTap: () => selectScan(image),
+                                    child: Container(
+                                      height: 180,
+                                      width: 120,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.grey.shade600),
+                                        borderRadius: BorderRadius.circular(4),
+                                        image: DecorationImage(
+                                          image: Image.memory(image).image,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -212,8 +223,8 @@ class _EditView extends StatelessWidget {
             selector: (state) => state.image,
             builder: (context, image) {
               return AppBarEditPhoto(
-                editPhotoDocumentStyle: editPhotoDocumentStyle,
-                onAddMore: onAddMore,
+                editPhotoDocumentStyle: widget.editPhotoDocumentStyle,
+                onAddMore: widget.onAddMore,
                 image: image,
               );
             },
@@ -221,14 +232,18 @@ class _EditView extends StatelessWidget {
 
           // * Default Bottom Bar
           BottomBarEditPhoto(
-            editPhotoDocumentStyle: editPhotoDocumentStyle,
+            editPhotoDocumentStyle: widget.editPhotoDocumentStyle,
           ),
 
           // * children
-          if (editPhotoDocumentStyle.children != null)
-            ...editPhotoDocumentStyle.children!,
+          if (widget.editPhotoDocumentStyle.children != null)
+            ...widget.editPhotoDocumentStyle.children!,
         ],
       ),
     );
+  }
+
+  void selectScan(Uint8List image) {
+    context.read<EditBloc>().add(EditStarted(image));
   }
 }
