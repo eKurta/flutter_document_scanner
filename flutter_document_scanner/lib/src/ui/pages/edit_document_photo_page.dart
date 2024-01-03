@@ -124,12 +124,13 @@ class _EditViewState extends State<_EditView> {
             if (state.statusSavePhotoDocument == AppStatus.loading) {
               final image = context.read<EditBloc>().state.image;
               if (image == null) {
+                widget.initPhotos.add(image!);
                 context.read<AppBloc>().add(
                       AppDocumentSaved(
                         isSuccess: false,
                       ),
                     );
-                widget.initPhotos.add(image!);
+
                 return;
               }
 
@@ -160,7 +161,7 @@ class _EditViewState extends State<_EditView> {
         fit: StackFit.expand,
         children: [
           Positioned(
-            top: widget.editPhotoDocumentStyle.top,
+            top: 100,
             left: widget.editPhotoDocumentStyle.left,
             right: widget.editPhotoDocumentStyle.right,
             bottom: widget.editPhotoDocumentStyle.bottom,
@@ -177,6 +178,27 @@ class _EditViewState extends State<_EditView> {
               },
             ),
           ),
+
+          // * Default App Bar
+          BlocSelector<EditBloc, EditState, Uint8List?>(
+            selector: (state) => state.image,
+            builder: (context, image) {
+              return AppBarEditPhoto(
+                editPhotoDocumentStyle: widget.editPhotoDocumentStyle,
+                onAddMore: widget.onAddMore,
+                image: image,
+              );
+            },
+          ),
+
+          // * Default Bottom Bar
+          BottomBarEditPhoto(
+            editPhotoDocumentStyle: widget.editPhotoDocumentStyle,
+          ),
+
+          // * children
+          if (widget.editPhotoDocumentStyle.children != null)
+            ...widget.editPhotoDocumentStyle.children!,
 
           Positioned(
             bottom: 92,
@@ -213,27 +235,6 @@ class _EditViewState extends State<_EditView> {
               ),
             ),
           ),
-
-          // * Default App Bar
-          BlocSelector<EditBloc, EditState, Uint8List?>(
-            selector: (state) => state.image,
-            builder: (context, image) {
-              return AppBarEditPhoto(
-                editPhotoDocumentStyle: widget.editPhotoDocumentStyle,
-                onAddMore: widget.onAddMore,
-                image: image,
-              );
-            },
-          ),
-
-          // * Default Bottom Bar
-          BottomBarEditPhoto(
-            editPhotoDocumentStyle: widget.editPhotoDocumentStyle,
-          ),
-
-          // * children
-          if (widget.editPhotoDocumentStyle.children != null)
-            ...widget.editPhotoDocumentStyle.children!,
         ],
       ),
     );
