@@ -243,6 +243,6 @@ class _EditViewState extends State<_EditView> {
   }
 
   void selectScan(Uint8List image) {
-    context.read<EditBloc>().add(EditStarted(image));
+    context.read<EditBloc>().add(EditImage(image));
   }
 }

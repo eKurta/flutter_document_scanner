@@ -27,6 +27,20 @@ class EditStarted extends EditEvent {
       ];
 }
 
+/// Initialize the page with the image
+class EditImage extends EditEvent {
+  ///
+  EditImage(this.image);
+
+  ///
+  final Uint8List image;
+
+  @override
+  List<Object?> get props => [
+        image,
+      ];
+}
+
 /// Apply the filter to the image
 class EditFilterChanged extends EditEvent {
   /// Create an event instance

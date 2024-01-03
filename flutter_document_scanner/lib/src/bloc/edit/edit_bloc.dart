@@ -23,6 +23,7 @@ class EditBloc extends Bloc<EditEvent, EditState> {
         super(EditState.init()) {
     on<EditStarted>(_started);
     on<EditFilterChanged>(_filterChanged);
+    on<EditImage>(_image);
   }
 
   final ImageUtils _imageUtils;
@@ -33,6 +34,17 @@ class EditBloc extends Bloc<EditEvent, EditState> {
   /// Load cropped image from previous page
   Future<void> _started(
     EditStarted event,
+    Emitter<EditState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        image: event.image,
+      ),
+    );
+  }
+
+  Future<void> _image(
+    EditImage event,
     Emitter<EditState> emit,
   ) async {
     imageBase = event.image;
