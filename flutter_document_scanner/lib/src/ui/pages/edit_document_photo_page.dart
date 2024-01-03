@@ -206,28 +206,46 @@ class _EditViewState extends State<_EditView> {
               child: Row(
                 children: [
                   ...allPhotos.map((image) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 4,
-                        vertical: 8,
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        child: GestureDetector(
-                          onTap: () => selectScan(image),
-                          child: Container(
-                            height: 160,
-                            width: 120,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey.shade600),
-                              borderRadius: BorderRadius.circular(4),
-                              image: DecorationImage(
-                                image: Image.memory(image).image,
+                    return Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 4,
+                            vertical: 8,
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(4),
+                            child: GestureDetector(
+                              onTap: () => selectScan(image),
+                              child: Container(
+                                height: 160,
+                                width: 120,
+                                decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: Colors.grey.shade600),
+                                  borderRadius: BorderRadius.circular(4),
+                                  image: DecorationImage(
+                                    image: Image.memory(image).image,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
+                        Positioned(
+                            top: 0,
+                            right: 0,
+                            child: GestureDetector(
+                              onTap: () => widget.onDelete(image),
+                              child: const CircleAvatar(
+                                backgroundColor: Colors.red,
+                                child: Icon(
+                                  Icons.close,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ))
+                      ],
                     );
                   }),
                 ],
