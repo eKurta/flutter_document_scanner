@@ -132,7 +132,6 @@ class _EditViewState extends State<_EditView> {
             if (state.statusSavePhotoDocument == AppStatus.loading) {
               final image = context.read<EditBloc>().state.image;
               if (image == null) {
-                allPhotos.insert(0, image!);
                 context.read<AppBloc>().add(
                       AppDocumentSaved(
                         isSuccess: false,
@@ -186,7 +185,7 @@ class _EditViewState extends State<_EditView> {
                     child: CircularProgressIndicator(),
                   );
                 }
-
+                allPhotos.insert(0, image);
                 return Image.memory(image);
               },
             ),

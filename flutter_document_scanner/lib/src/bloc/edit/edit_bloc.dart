@@ -36,6 +36,8 @@ class EditBloc extends Bloc<EditEvent, EditState> {
     EditStarted event,
     Emitter<EditState> emit,
   ) async {
+    imageBase = event.image;
+
     emit(
       state.copyWith(
         image: event.image,
@@ -47,8 +49,6 @@ class EditBloc extends Bloc<EditEvent, EditState> {
     EditImage event,
     Emitter<EditState> emit,
   ) async {
-    imageBase = event.image;
-
     emit(
       state.copyWith(
         image: event.image,
