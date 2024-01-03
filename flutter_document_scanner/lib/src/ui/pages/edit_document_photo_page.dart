@@ -108,6 +108,7 @@ class _EditViewState extends State<_EditView> {
   @override
   void initState() {
     allPhotos = List.from(widget.initPhotos);
+    allPhotos.insert(0, context.read<EditBloc>().state.image!);
     super.initState();
   }
 
@@ -150,19 +151,19 @@ class _EditViewState extends State<_EditView> {
             }
           },
         ),
-        BlocListener<EditBloc, EditState>(
-          listenWhen: (previous, current) =>
-              current.image != previous.image && previous.image != null,
-          listener: (context, state) {
-            if (state.image != null) {
-              context.read<AppBloc>().add(
-                    AppNewEditedImageLoaded(
-                      isSuccess: true,
-                    ),
-                  );
-            }
-          },
-        ),
+        // BlocListener<EditBloc, EditState>(
+        //   listenWhen: (previous, current) =>
+        //       current.image != previous.image && previous.image != null,
+        //   listener: (context, state) {
+        //     if (state.image != null) {
+        //       context.read<AppBloc>().add(
+        //             AppNewEditedImageLoaded(
+        //               isSuccess: true,
+        //             ),
+        //           );
+        //     }
+        //   },
+        // ),
       ],
       child: Column(
         children: [
@@ -185,7 +186,7 @@ class _EditViewState extends State<_EditView> {
                     child: CircularProgressIndicator(),
                   );
                 }
-                allPhotos.insert(0, image);
+
                 return Image.memory(image);
               },
             ),
