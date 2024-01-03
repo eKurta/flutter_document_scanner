@@ -129,6 +129,7 @@ class _EditViewState extends State<_EditView> {
                         isSuccess: false,
                       ),
                     );
+                widget.initPhotos.add(image!);
                 return;
               }
 
@@ -151,7 +152,6 @@ class _EditViewState extends State<_EditView> {
                       isSuccess: true,
                     ),
                   );
-              widget.initPhotos.add(state.image!);
             }
           },
         ),
@@ -173,48 +173,44 @@ class _EditViewState extends State<_EditView> {
                   );
                 }
 
-                return Stack(
-                  children: [
-                    Image.memory(image),
-                    Positioned(
-                      bottom: 92,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            ...widget.initPhotos.map((image) {
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 4,
-                                  vertical: 8,
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(4),
-                                  child: GestureDetector(
-                                    onTap: () => selectScan(image),
-                                    child: Container(
-                                      height: 180,
-                                      width: 120,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.grey.shade600),
-                                        borderRadius: BorderRadius.circular(4),
-                                        image: DecorationImage(
-                                          image: Image.memory(image).image,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }),
-                          ],
+                return Image.memory(image);
+              },
+            ),
+          ),
+
+          Positioned(
+            bottom: 92,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  ...widget.initPhotos.map((image) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 4,
+                        vertical: 8,
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: GestureDetector(
+                          onTap: () => selectScan(image),
+                          child: Container(
+                            height: 180,
+                            width: 120,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey.shade600),
+                              borderRadius: BorderRadius.circular(4),
+                              image: DecorationImage(
+                                image: Image.memory(image).image,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    )
-                  ],
-                );
-              },
+                    );
+                  }),
+                ],
+              ),
             ),
           ),
 
