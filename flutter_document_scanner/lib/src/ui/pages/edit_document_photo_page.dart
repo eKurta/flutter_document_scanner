@@ -96,13 +96,21 @@ class _EditView extends StatefulWidget {
   /// Calback to add more photos
   final OnAddMore onAddMore;
 
-  List<Uint8List> initPhotos;
+  final List<Uint8List> initPhotos;
 
   @override
   State<_EditView> createState() => _EditViewState();
 }
 
 class _EditViewState extends State<_EditView> {
+  List<Uint8List> allPhotos = [];
+
+  @override
+  void initState() {
+    allPhotos = List.from(widget.initPhotos);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
@@ -124,7 +132,7 @@ class _EditViewState extends State<_EditView> {
             if (state.statusSavePhotoDocument == AppStatus.loading) {
               final image = context.read<EditBloc>().state.image;
               if (image == null) {
-                widget.initPhotos.add(image!);
+                allPhotos.insert(0, image!);
                 context.read<AppBloc>().add(
                       AppDocumentSaved(
                         isSuccess: false,
@@ -157,14 +165,19 @@ class _EditViewState extends State<_EditView> {
           },
         ),
       ],
-      child: Stack(
-        fit: StackFit.expand,
+      child: Column(
         children: [
-          Positioned(
-            top: 100,
-            left: widget.editPhotoDocumentStyle.left,
-            right: widget.editPhotoDocumentStyle.right,
-            bottom: widget.editPhotoDocumentStyle.bottom,
+          BlocSelector<EditBloc, EditState, Uint8List?>(
+            selector: (state) => state.image,
+            builder: (context, image) {
+              return AppBarEditPhoto(
+                editPhotoDocumentStyle: widget.editPhotoDocumentStyle,
+                onAddMore: widget.onAddMore,
+                image: image,
+              );
+            },
+          ),
+          Expanded(
             child: BlocSelector<EditBloc, EditState, Uint8List?>(
               selector: (state) => state.image,
               builder: (context, image) {
@@ -180,33 +193,14 @@ class _EditViewState extends State<_EditView> {
           ),
 
           // * Default App Bar
-          BlocSelector<EditBloc, EditState, Uint8List?>(
-            selector: (state) => state.image,
-            builder: (context, image) {
-              return AppBarEditPhoto(
-                editPhotoDocumentStyle: widget.editPhotoDocumentStyle,
-                onAddMore: widget.onAddMore,
-                image: image,
-              );
-            },
-          ),
 
-          // * Default Bottom Bar
-          BottomBarEditPhoto(
-            editPhotoDocumentStyle: widget.editPhotoDocumentStyle,
-          ),
-
-          // * children
-          if (widget.editPhotoDocumentStyle.children != null)
-            ...widget.editPhotoDocumentStyle.children!,
-
-          Positioned(
-            bottom: 92,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  ...widget.initPhotos.map((image) {
+                  ...allPhotos.map((image) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 4,
@@ -217,7 +211,7 @@ class _EditViewState extends State<_EditView> {
                         child: GestureDetector(
                           onTap: () => selectScan(image),
                           child: Container(
-                            height: 180,
+                            height: 160,
                             width: 120,
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.grey.shade600),
@@ -235,6 +229,14 @@ class _EditViewState extends State<_EditView> {
               ),
             ),
           ),
+          // * Default Bottom Bar
+          BottomBarEditPhoto(
+            editPhotoDocumentStyle: widget.editPhotoDocumentStyle,
+          ),
+
+          // * children
+          if (widget.editPhotoDocumentStyle.children != null)
+            ...widget.editPhotoDocumentStyle.children!,
         ],
       ),
     );
