@@ -37,6 +37,7 @@ class DocumentScanner extends StatelessWidget {
     this.cropPhotoDocumentStyle = const CropPhotoDocumentStyle(),
     this.editPhotoDocumentStyle = const EditPhotoDocumentStyle(),
     required this.onSave,
+    required this.onDelete,
     required this.onAddMore,
     required this.initPhotos,
   });
@@ -74,6 +75,8 @@ class DocumentScanner extends StatelessWidget {
   /// After performing the whole process of capturing the document
   /// It will return it as [Uint8List].
   final OnSave onSave;
+
+  final ValueChanged<Uint8List> onDelete;
 
   ///On add more button pressed
   final OnAddMore onAddMore;
@@ -190,6 +193,7 @@ class DocumentScanner extends StatelessWidget {
               initialCameraLensDirection: initialCameraLensDirection,
               resolutionCamera: resolutionCamera,
               initPhotos: initPhotos,
+              onDelete: onDelete,
             ),
           ),
         ),
@@ -206,6 +210,7 @@ class _View extends StatelessWidget {
       required this.cropPhotoDocumentStyle,
       required this.editPhotoDocumentStyle,
       required this.onSave,
+      required this.onDelete,
       required this.onAddMore,
       required this.initialCameraLensDirection,
       required this.resolutionCamera,
@@ -221,6 +226,7 @@ class _View extends StatelessWidget {
   final ResolutionPreset resolutionCamera;
   final OnAddMore onAddMore;
   final List<Uint8List> initPhotos;
+  final ValueChanged<Uint8List> onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -261,6 +267,7 @@ class _View extends StatelessWidget {
               onSave: onSave,
               onAddMore: onAddMore,
               initPhotos: initPhotos,
+              onDelete: onDelete,
             );
             break;
         }

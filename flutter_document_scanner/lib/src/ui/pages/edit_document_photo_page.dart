@@ -29,6 +29,7 @@ class EditDocumentPhotoPage extends StatelessWidget {
     super.key,
     required this.editPhotoDocumentStyle,
     required this.onSave,
+    required this.onDelete,
     required this.onAddMore,
     required this.initPhotos,
   });
@@ -38,6 +39,7 @@ class EditDocumentPhotoPage extends StatelessWidget {
 
   /// Callback to save the photo
   final OnSave onSave;
+  final ValueChanged<Uint8List> onDelete;
 
   /// Calback to add more photos
   final OnAddMore onAddMore;
@@ -67,6 +69,7 @@ class EditDocumentPhotoPage extends StatelessWidget {
               onSave: onSave,
               onAddMore: onAddMore,
               initPhotos: initPhotos,
+              onDelete: onDelete,
             ),
           );
         },
@@ -86,12 +89,14 @@ class _EditView extends StatefulWidget {
   _EditView({
     required this.editPhotoDocumentStyle,
     required this.onSave,
+    required this.onDelete,
     required this.onAddMore,
     required this.initPhotos,
   });
 
   final EditPhotoDocumentStyle editPhotoDocumentStyle;
   final OnSave onSave;
+  final ValueChanged<Uint8List> onDelete;
 
   /// Calback to add more photos
   final OnAddMore onAddMore;
