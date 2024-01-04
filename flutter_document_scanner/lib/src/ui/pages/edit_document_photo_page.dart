@@ -113,7 +113,7 @@ class _EditViewState extends State<_EditView> {
   @override
   void initState() {
     allPhotos = List.from(widget.initPhotos);
-    allPhotos.insert(0, context.read<EditBloc>().state.image!);
+
     super.initState();
   }
 
@@ -233,18 +233,19 @@ class _EditViewState extends State<_EditView> {
                           ),
                         ),
                         Positioned(
-                            top: 0,
-                            right: 0,
-                            child: GestureDetector(
-                              onTap: () => widget.onDelete(image),
-                              child: const CircleAvatar(
-                                backgroundColor: Colors.red,
-                                child: Icon(
-                                  Icons.close,
-                                  color: Colors.white,
-                                ),
+                          top: 0,
+                          right: 0,
+                          child: GestureDetector(
+                            onTap: () => widget.onDelete(image),
+                            child: const CircleAvatar(
+                              backgroundColor: Colors.red,
+                              child: Icon(
+                                Icons.close,
+                                color: Colors.white,
                               ),
-                            ))
+                            ),
+                          ),
+                        ),
                       ],
                     );
                   }),
@@ -266,6 +267,10 @@ class _EditViewState extends State<_EditView> {
   }
 
   void selectScan(Uint8List image) {
+    if (!allPhotos.contains(context.read<EditBloc>().state.image)) {
+      allPhotos.insert(0, context.read<EditBloc>().state.image!);
+    }
+
     context.read<EditBloc>().add(EditImage(image));
   }
 }
