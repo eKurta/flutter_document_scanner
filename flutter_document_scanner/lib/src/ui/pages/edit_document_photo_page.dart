@@ -158,7 +158,7 @@ class _EditViewState extends State<_EditView> {
         ),
         BlocListener<EditBloc, EditState>(
           listenWhen: (previous, current) =>
-              current.image != previous.image && previous.image != null,
+              current.image != previous.image && previous.image == null,
           listener: (context, state) {
             if (state.image != null) {
               context.read<AppBloc>().add(
