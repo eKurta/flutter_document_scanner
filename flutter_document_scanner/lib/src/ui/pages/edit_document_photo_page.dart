@@ -153,10 +153,6 @@ class _EditViewState extends State<_EditView> {
                     ),
                   );
               widget.onSave(image);
-
-              setState(() {
-                allPhotos.insert(0, image);
-              });
             }
           },
         ),
@@ -170,6 +166,14 @@ class _EditViewState extends State<_EditView> {
                       isSuccess: true,
                     ),
                   );
+            }
+          },
+        ),
+        BlocListener<EditBloc, EditState>(
+          listenWhen: (previous, current) => previous.image == null,
+          listener: (context, state) {
+            if (state.image != null) {
+              allPhotos.add(state.image!);
             }
           },
         ),
