@@ -35,54 +35,49 @@ class AppBarEditPhoto extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    return Positioned(
-      top: 0,
-      left: 0,
-      right: 0,
-      child: Container(
-        padding: EdgeInsets.only(
-          top: MediaQuery.of(context).padding.top + 15,
-        ),
-        color: Colors.black.withOpacity(0.3),
-        child: Row(
-          children: [
-            IconButton(
-              onPressed: () =>
-                  context.read<DocumentScannerController>().changePage(
-                        AppPages.cropPhoto,
-                      ),
-              icon: const Icon(
-                Icons.close,
-              ),
-              color: Colors.white,
+    return Container(
+      padding: EdgeInsets.only(
+        top: MediaQuery.of(context).padding.top + 15,
+      ),
+      color: Colors.black.withOpacity(0.3),
+      child: Row(
+        children: [
+          IconButton(
+            onPressed: () =>
+                context.read<DocumentScannerController>().changePage(
+                      AppPages.cropPhoto,
+                    ),
+            icon: const Icon(
+              Icons.close,
             ),
-            const Spacer(),
-            if (image != null)
-              TextButton(
-                onPressed: () => onAddMore(image!),
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white,
-                ),
-                child: const Text(
-                  'Add more',
-                ),
-              ),
-            const SizedBox(
-              width: 16,
-            ),
-            // * Crop photo
+            color: Colors.white,
+          ),
+          const Spacer(),
+          if (image != null)
             TextButton(
-              onPressed: () =>
-                  context.read<DocumentScannerController>().savePhotoDocument(),
+              onPressed: () => onAddMore(image!),
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white,
               ),
-              child: Text(
-                editPhotoDocumentStyle.textButtonSave,
+              child: const Text(
+                'Add more',
               ),
             ),
-          ],
-        ),
+          const SizedBox(
+            width: 16,
+          ),
+          // * Crop photo
+          TextButton(
+            onPressed: () =>
+                context.read<DocumentScannerController>().savePhotoDocument(),
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.white,
+            ),
+            child: Text(
+              editPhotoDocumentStyle.textButtonSave,
+            ),
+          ),
+        ],
       ),
     );
   }

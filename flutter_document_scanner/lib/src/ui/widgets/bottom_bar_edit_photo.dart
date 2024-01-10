@@ -26,14 +26,12 @@ class BottomBarEditPhoto extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    return Positioned(
-      bottom: MediaQuery.of(context).padding.bottom,
-      left: 0,
-      right: 0,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-        ),
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 12),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
