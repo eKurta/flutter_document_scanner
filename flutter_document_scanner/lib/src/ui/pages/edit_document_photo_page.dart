@@ -159,6 +159,9 @@ class _EditViewState extends State<_EditView> {
                 editPhotoDocumentStyle: widget.editPhotoDocumentStyle,
                 onAddMore: widget.onAddMore,
                 image: image,
+                onSave: () {
+                  widget.onSave(image!);
+                },
               );
             },
           ),

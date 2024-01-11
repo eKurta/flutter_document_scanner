@@ -18,6 +18,7 @@ class AppBarEditPhoto extends StatelessWidget {
       {super.key,
       required this.editPhotoDocumentStyle,
       required this.onAddMore,
+      required this.onSave,
       required this.image});
 
   /// The style of the page
@@ -25,6 +26,8 @@ class AppBarEditPhoto extends StatelessWidget {
 
   ///On add more button pressed user decides what happens
   final OnAddMore onAddMore;
+
+  final VoidCallback onSave;
 
   ///Cropped image that the user can see on the creen
   final Uint8List? image;
@@ -68,8 +71,7 @@ class AppBarEditPhoto extends StatelessWidget {
           ),
           // * Crop photo
           TextButton(
-            onPressed: () =>
-                context.read<DocumentScannerController>().savePhotoDocument(),
+            onPressed: onSave,
             style: TextButton.styleFrom(
               foregroundColor: Colors.white,
             ),
