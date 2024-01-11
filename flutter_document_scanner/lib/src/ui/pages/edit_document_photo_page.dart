@@ -169,14 +169,6 @@ class _EditViewState extends State<_EditView> {
             }
           },
         ),
-        BlocListener<EditBloc, EditState>(
-          listenWhen: (previous, current) => previous.image == null,
-          listener: (context, state) {
-            if (state.image != null) {
-              allPhotos.add(state.image!);
-            }
-          },
-        ),
       ],
       child: Column(
         children: [
