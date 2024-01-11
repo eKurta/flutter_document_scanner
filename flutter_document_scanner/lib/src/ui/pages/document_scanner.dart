@@ -37,9 +37,7 @@ class DocumentScanner extends StatelessWidget {
     this.cropPhotoDocumentStyle = const CropPhotoDocumentStyle(),
     this.editPhotoDocumentStyle = const EditPhotoDocumentStyle(),
     required this.onSave,
-    required this.onDelete,
     required this.onAddMore,
-    required this.initPhotos,
   });
 
   /// Controller to execute the different functionalities
@@ -76,13 +74,8 @@ class DocumentScanner extends StatelessWidget {
   /// It will return it as [Uint8List].
   final OnSave onSave;
 
-  final ValueChanged<Uint8List> onDelete;
-
   ///On add more button pressed
   final OnAddMore onAddMore;
-
-  ///Photos user wants to add to the document before the currently scanned document
-  final List<Uint8List> initPhotos;
 
   @override
   Widget build(BuildContext context) {
@@ -192,8 +185,6 @@ class DocumentScanner extends StatelessWidget {
               onAddMore: onAddMore,
               initialCameraLensDirection: initialCameraLensDirection,
               resolutionCamera: resolutionCamera,
-              initPhotos: initPhotos,
-              onDelete: onDelete,
             ),
           ),
         ),
@@ -203,18 +194,17 @@ class DocumentScanner extends StatelessWidget {
 }
 
 class _View extends StatelessWidget {
-  const _View(
-      {this.pageTransitionBuilder,
-      required this.generalStyles,
-      required this.takePhotoDocumentStyle,
-      required this.cropPhotoDocumentStyle,
-      required this.editPhotoDocumentStyle,
-      required this.onSave,
-      required this.onDelete,
-      required this.onAddMore,
-      required this.initialCameraLensDirection,
-      required this.resolutionCamera,
-      required this.initPhotos});
+  const _View({
+    this.pageTransitionBuilder,
+    required this.generalStyles,
+    required this.takePhotoDocumentStyle,
+    required this.cropPhotoDocumentStyle,
+    required this.editPhotoDocumentStyle,
+    required this.onSave,
+    required this.onAddMore,
+    required this.initialCameraLensDirection,
+    required this.resolutionCamera,
+  });
 
   final AnimatedSwitcherTransitionBuilder? pageTransitionBuilder;
   final GeneralStyles generalStyles;
@@ -225,8 +215,6 @@ class _View extends StatelessWidget {
   final CameraLensDirection initialCameraLensDirection;
   final ResolutionPreset resolutionCamera;
   final OnAddMore onAddMore;
-  final List<Uint8List> initPhotos;
-  final ValueChanged<Uint8List> onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -266,8 +254,6 @@ class _View extends StatelessWidget {
               editPhotoDocumentStyle: editPhotoDocumentStyle,
               onSave: onSave,
               onAddMore: onAddMore,
-              initPhotos: initPhotos,
-              onDelete: onDelete,
             );
             break;
         }

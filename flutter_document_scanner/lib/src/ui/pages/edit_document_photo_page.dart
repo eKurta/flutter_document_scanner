@@ -29,9 +29,7 @@ class EditDocumentPhotoPage extends StatelessWidget {
     super.key,
     required this.editPhotoDocumentStyle,
     required this.onSave,
-    required this.onDelete,
     required this.onAddMore,
-    required this.initPhotos,
   });
 
   /// Style of the page
@@ -39,13 +37,11 @@ class EditDocumentPhotoPage extends StatelessWidget {
 
   /// Callback to save the photo
   final OnSave onSave;
-  final ValueChanged<Uint8List> onDelete;
 
   /// Calback to add more photos
   final OnAddMore onAddMore;
 
   ///Photos that user wants to add before the currently scanned photo
-  final List<Uint8List> initPhotos;
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +64,6 @@ class EditDocumentPhotoPage extends StatelessWidget {
               editPhotoDocumentStyle: editPhotoDocumentStyle,
               onSave: onSave,
               onAddMore: onAddMore,
-              initPhotos: initPhotos,
-              onDelete: onDelete,
             ),
           );
         },
@@ -89,34 +83,20 @@ class _EditView extends StatefulWidget {
   _EditView({
     required this.editPhotoDocumentStyle,
     required this.onSave,
-    required this.onDelete,
     required this.onAddMore,
-    required this.initPhotos,
   });
 
   final EditPhotoDocumentStyle editPhotoDocumentStyle;
   final OnSave onSave;
-  final ValueChanged<Uint8List> onDelete;
 
   /// Calback to add more photos
   final OnAddMore onAddMore;
-
-  final List<Uint8List> initPhotos;
 
   @override
   State<_EditView> createState() => _EditViewState();
 }
 
 class _EditViewState extends State<_EditView> {
-  List<Uint8List> allPhotos = [];
-
-  @override
-  void initState() {
-    allPhotos = List.from(widget.initPhotos);
-
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
@@ -199,60 +179,6 @@ class _EditViewState extends State<_EditView> {
 
           // * Default App Bar
 
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  ...allPhotos.map((image) {
-                    return Stack(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 4,
-                            vertical: 8,
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(4),
-                            child: GestureDetector(
-                              onTap: () => selectScan(image),
-                              child: Container(
-                                height: 160,
-                                width: 120,
-                                decoration: BoxDecoration(
-                                  border:
-                                      Border.all(color: Colors.grey.shade600),
-                                  borderRadius: BorderRadius.circular(4),
-                                  image: DecorationImage(
-                                    image: Image.memory(image).image,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 0,
-                          right: 0,
-                          child: GestureDetector(
-                            onTap: () => widget.onDelete(image),
-                            child: const CircleAvatar(
-                              backgroundColor: Colors.red,
-                              child: Icon(
-                                Icons.close,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-                  }),
-                ],
-              ),
-            ),
-          ),
           // * Default Bottom Bar
           BottomBarEditPhoto(
             editPhotoDocumentStyle: widget.editPhotoDocumentStyle,
@@ -264,13 +190,5 @@ class _EditViewState extends State<_EditView> {
         ],
       ),
     );
-  }
-
-  void selectScan(Uint8List image) {
-    if (!allPhotos.contains(context.read<EditBloc>().state.image)) {
-      allPhotos.insert(0, context.read<EditBloc>().state.image!);
-    }
-
-    context.read<EditBloc>().add(EditImage(image));
   }
 }
