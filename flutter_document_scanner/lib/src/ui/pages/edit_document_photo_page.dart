@@ -110,32 +110,6 @@ class _EditViewState extends State<_EditView> {
                 .add(EditFilterChanged(state.currentFilterType));
           },
         ),
-        BlocListener<AppBloc, AppState>(
-          listenWhen: (previous, current) =>
-              current.statusSavePhotoDocument !=
-              previous.statusSavePhotoDocument,
-          listener: (context, state) {
-            if (state.statusSavePhotoDocument == AppStatus.loading) {
-              final image = context.read<EditBloc>().state.image;
-              if (image == null) {
-                context.read<AppBloc>().add(
-                      AppDocumentSaved(
-                        isSuccess: false,
-                      ),
-                    );
-
-                return;
-              }
-
-              context.read<AppBloc>().add(
-                    AppDocumentSaved(
-                      isSuccess: true,
-                    ),
-                  );
-              widget.onSave(image);
-            }
-          },
-        ),
         BlocListener<EditBloc, EditState>(
           listenWhen: (previous, current) =>
               current.image != previous.image && previous.image != null,
