@@ -154,13 +154,6 @@ class _EditViewState extends State<_EditView> {
             ),
           ),
 
-          // * Default App Bar
-
-          // * Default Bottom Bar
-          BottomBarEditPhoto(
-            editPhotoDocumentStyle: widget.editPhotoDocumentStyle,
-          ),
-
           // * children
           if (widget.editPhotoDocumentStyle.children != null)
             ...widget.editPhotoDocumentStyle.children!,
