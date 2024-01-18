@@ -15,12 +15,12 @@ import 'package:flutter_document_scanner/src/utils/take_photo_document_style.dar
 /// Page to take a photo
 class TakePhotoDocumentPage extends StatelessWidget {
   /// Create a page with style
-  const TakePhotoDocumentPage({
-    super.key,
-    required this.takePhotoDocumentStyle,
-    required this.initialCameraLensDirection,
-    required this.resolutionCamera,
-  });
+  const TakePhotoDocumentPage(
+      {super.key,
+      required this.takePhotoDocumentStyle,
+      required this.initialCameraLensDirection,
+      required this.resolutionCamera,
+      required this.onScannerClose});
 
   /// Style of the page
   final TakePhotoDocumentStyle takePhotoDocumentStyle;
@@ -30,6 +30,8 @@ class TakePhotoDocumentPage extends StatelessWidget {
 
   /// Camera library [ResolutionPreset]
   final ResolutionPreset resolutionCamera;
+
+  final VoidCallback onScannerClose;
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +54,8 @@ class TakePhotoDocumentPage extends StatelessWidget {
 
           case AppStatus.success:
             return _CameraPreview(
-              takePhotoDocumentStyle: takePhotoDocumentStyle,
-            );
+                takePhotoDocumentStyle: takePhotoDocumentStyle,
+                onScannerClose: onScannerClose);
 
           case AppStatus.failure:
             return Container();
@@ -64,11 +66,11 @@ class TakePhotoDocumentPage extends StatelessWidget {
 }
 
 class _CameraPreview extends StatelessWidget {
-  const _CameraPreview({
-    required this.takePhotoDocumentStyle,
-  });
+  const _CameraPreview(
+      {required this.takePhotoDocumentStyle, required this.onScannerClose});
 
   final TakePhotoDocumentStyle takePhotoDocumentStyle;
+  final VoidCallback onScannerClose;
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +105,18 @@ class _CameraPreview extends StatelessWidget {
             ButtonTakePhoto(
               takePhotoDocumentStyle: takePhotoDocumentStyle,
             ),
+
+            Positioned(
+              top: 16,
+              left: 16,
+              child: IconButton(
+                onPressed: onScannerClose,
+                icon: const Icon(
+                  Icons.close,
+                  color: Colors.white,
+                ),
+              ),
+            )
           ],
         );
       },

@@ -26,19 +26,19 @@ import 'package:flutter_document_scanner/src/utils/take_photo_document_style.dar
 class DocumentScanner extends StatelessWidget {
   /// Create a main page with properties and methods
   /// to manage the document scanner.
-  const DocumentScanner({
-    super.key,
-    this.controller,
-    this.generalStyles = const GeneralStyles(),
-    this.pageTransitionBuilder,
-    this.initialCameraLensDirection = CameraLensDirection.back,
-    this.resolutionCamera = ResolutionPreset.high,
-    this.takePhotoDocumentStyle = const TakePhotoDocumentStyle(),
-    this.cropPhotoDocumentStyle = const CropPhotoDocumentStyle(),
-    this.editPhotoDocumentStyle = const EditPhotoDocumentStyle(),
-    required this.onSave,
-    required this.onAddMore,
-  });
+  const DocumentScanner(
+      {super.key,
+      this.controller,
+      this.generalStyles = const GeneralStyles(),
+      this.pageTransitionBuilder,
+      this.initialCameraLensDirection = CameraLensDirection.back,
+      this.resolutionCamera = ResolutionPreset.high,
+      this.takePhotoDocumentStyle = const TakePhotoDocumentStyle(),
+      this.cropPhotoDocumentStyle = const CropPhotoDocumentStyle(),
+      this.editPhotoDocumentStyle = const EditPhotoDocumentStyle(),
+      required this.onSave,
+      required this.onAddMore,
+      required this.onScannerClose});
 
   /// Controller to execute the different functionalities
   /// using the [DocumentScannerController]
@@ -76,6 +76,8 @@ class DocumentScanner extends StatelessWidget {
 
   ///On add more button pressed
   final OnAddMore onAddMore;
+
+  final VoidCallback onScannerClose;
 
   @override
   Widget build(BuildContext context) {
@@ -176,16 +178,16 @@ class DocumentScanner extends StatelessWidget {
           child: ColoredBox(
             color: generalStyles.baseColor,
             child: _View(
-              pageTransitionBuilder: pageTransitionBuilder,
-              generalStyles: generalStyles,
-              takePhotoDocumentStyle: takePhotoDocumentStyle,
-              cropPhotoDocumentStyle: cropPhotoDocumentStyle,
-              editPhotoDocumentStyle: editPhotoDocumentStyle,
-              onSave: onSave,
-              onAddMore: onAddMore,
-              initialCameraLensDirection: initialCameraLensDirection,
-              resolutionCamera: resolutionCamera,
-            ),
+                pageTransitionBuilder: pageTransitionBuilder,
+                generalStyles: generalStyles,
+                takePhotoDocumentStyle: takePhotoDocumentStyle,
+                cropPhotoDocumentStyle: cropPhotoDocumentStyle,
+                editPhotoDocumentStyle: editPhotoDocumentStyle,
+                onSave: onSave,
+                onAddMore: onAddMore,
+                initialCameraLensDirection: initialCameraLensDirection,
+                resolutionCamera: resolutionCamera,
+                onScannerClose: onScannerClose),
           ),
         ),
       ),
@@ -194,17 +196,17 @@ class DocumentScanner extends StatelessWidget {
 }
 
 class _View extends StatelessWidget {
-  const _View({
-    this.pageTransitionBuilder,
-    required this.generalStyles,
-    required this.takePhotoDocumentStyle,
-    required this.cropPhotoDocumentStyle,
-    required this.editPhotoDocumentStyle,
-    required this.onSave,
-    required this.onAddMore,
-    required this.initialCameraLensDirection,
-    required this.resolutionCamera,
-  });
+  const _View(
+      {this.pageTransitionBuilder,
+      required this.generalStyles,
+      required this.takePhotoDocumentStyle,
+      required this.cropPhotoDocumentStyle,
+      required this.editPhotoDocumentStyle,
+      required this.onSave,
+      required this.onAddMore,
+      required this.initialCameraLensDirection,
+      required this.resolutionCamera,
+      required this.onScannerClose});
 
   final AnimatedSwitcherTransitionBuilder? pageTransitionBuilder;
   final GeneralStyles generalStyles;
@@ -215,6 +217,7 @@ class _View extends StatelessWidget {
   final CameraLensDirection initialCameraLensDirection;
   final ResolutionPreset resolutionCamera;
   final OnAddMore onAddMore;
+  final VoidCallback onScannerClose;
 
   @override
   Widget build(BuildContext context) {
@@ -231,10 +234,10 @@ class _View extends StatelessWidget {
           case AppPages.takePhoto:
             if (generalStyles.showCameraPreview) {
               page = TakePhotoDocumentPage(
-                takePhotoDocumentStyle: takePhotoDocumentStyle,
-                initialCameraLensDirection: initialCameraLensDirection,
-                resolutionCamera: resolutionCamera,
-              );
+                  takePhotoDocumentStyle: takePhotoDocumentStyle,
+                  initialCameraLensDirection: initialCameraLensDirection,
+                  resolutionCamera: resolutionCamera,
+                  onScannerClose: onScannerClose);
 
               break;
             }
