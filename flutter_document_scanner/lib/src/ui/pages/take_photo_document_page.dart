@@ -109,7 +109,7 @@ class _CameraPreview extends StatelessWidget {
             ),
 
             Positioned(
-              top: Platform.isAndroid ? 32 : 16,
+              top: Platform.isAndroid ? 16 : 32,
               left: 16,
               child: IconButton(
                 onPressed: onScannerClose,
