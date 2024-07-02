@@ -15,12 +15,13 @@ import 'package:flutter_document_scanner/src/utils/take_photo_document_style.dar
 /// Page to take a photo
 class TakePhotoDocumentPage extends StatelessWidget {
   /// Create a page with style
-  const TakePhotoDocumentPage(
-      {super.key,
-      required this.takePhotoDocumentStyle,
-      required this.initialCameraLensDirection,
-      required this.resolutionCamera,
-      required this.onScannerClose});
+  const TakePhotoDocumentPage({
+    super.key,
+    required this.takePhotoDocumentStyle,
+    required this.initialCameraLensDirection,
+    required this.resolutionCamera,
+    required this.onScannerClose,
+  });
 
   /// Style of the page
   final TakePhotoDocumentStyle takePhotoDocumentStyle;

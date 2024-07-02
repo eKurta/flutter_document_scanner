@@ -38,6 +38,7 @@ class ButtonTakePhoto extends StatelessWidget {
             height: 56,
             width: 56,
             decoration: BoxDecoration(
+              color: Colors.transparent,
               shape: BoxShape.circle,
               border: Border.all(
                 color: Colors.white,
