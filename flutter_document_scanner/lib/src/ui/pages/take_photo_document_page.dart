@@ -14,6 +14,7 @@ import 'package:flutter_document_scanner/src/bloc/app/app.dart';
 import 'package:flutter_document_scanner/src/bloc/edit/edit.dart';
 import 'package:flutter_document_scanner/src/bloc/edit/edit_bloc.dart';
 import 'package:flutter_document_scanner/src/ui/widgets/button_take_photo.dart';
+import 'package:flutter_document_scanner/src/utils/image_utils.dart';
 import 'package:flutter_document_scanner/src/utils/model_utils.dart';
 import 'package:flutter_document_scanner/src/utils/take_photo_document_style.dart';
 
@@ -51,27 +52,31 @@ class TakePhotoDocumentPage extends StatelessWidget {
           ),
         );
 
-    return BlocSelector<AppBloc, AppState, AppStatus>(
-      selector: (state) => state.statusCamera,
-      builder: (context, state) {
-        switch (state) {
-          case AppStatus.initial:
-            return Container();
+    return BlocProvider(
+        create: (context) => EditBloc(
+              imageUtils: ImageUtils(),
+            ),
+        child: BlocSelector<AppBloc, AppState, AppStatus>(
+          selector: (state) => state.statusCamera,
+          builder: (context, state) {
+            switch (state) {
+              case AppStatus.initial:
+                return Container();
 
-          case AppStatus.loading:
-            return takePhotoDocumentStyle.onLoading;
+              case AppStatus.loading:
+                return takePhotoDocumentStyle.onLoading;
 
-          case AppStatus.success:
-            return _CameraPreview(
-                takePhotoDocumentStyle: takePhotoDocumentStyle,
-                onScannerClose: onScannerClose,
-                onSave: onSave);
+              case AppStatus.success:
+                return _CameraPreview(
+                    takePhotoDocumentStyle: takePhotoDocumentStyle,
+                    onScannerClose: onScannerClose,
+                    onSave: onSave);
 
-          case AppStatus.failure:
-            return Container();
-        }
-      },
-    );
+              case AppStatus.failure:
+                return Container();
+            }
+          },
+        ));
   }
 }
 
