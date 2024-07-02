@@ -235,10 +235,12 @@ class _View extends StatelessWidget {
           case AppPages.takePhoto:
             if (generalStyles.showCameraPreview) {
               page = TakePhotoDocumentPage(
-                  takePhotoDocumentStyle: takePhotoDocumentStyle,
-                  initialCameraLensDirection: initialCameraLensDirection,
-                  resolutionCamera: resolutionCamera,
-                  onScannerClose: onScannerClose);
+                takePhotoDocumentStyle: takePhotoDocumentStyle,
+                initialCameraLensDirection: initialCameraLensDirection,
+                resolutionCamera: resolutionCamera,
+                onScannerClose: onScannerClose,
+                onSave: onSave,
+              );
 
               break;
             }
@@ -254,11 +256,18 @@ class _View extends StatelessWidget {
             break;
 
           case AppPages.editDocument:
-            page = EditDocumentPhotoPage(
-              editPhotoDocumentStyle: editPhotoDocumentStyle,
+            page = TakePhotoDocumentPage(
+              takePhotoDocumentStyle: takePhotoDocumentStyle,
+              initialCameraLensDirection: initialCameraLensDirection,
+              resolutionCamera: resolutionCamera,
+              onScannerClose: onScannerClose,
               onSave: onSave,
-              onAddMore: onAddMore,
             );
+            // EditDocumentPhotoPage(
+            //   editPhotoDocumentStyle: editPhotoDocumentStyle,
+            //   onSave: onSave,
+            //   onAddMore: onAddMore,
+            // );
             break;
         }
 

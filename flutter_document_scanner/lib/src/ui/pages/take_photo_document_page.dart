@@ -5,11 +5,16 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import 'dart:typed_data';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_document_scanner/src/bloc/app/app.dart';
+import 'package:flutter_document_scanner/src/bloc/edit/edit.dart';
+import 'package:flutter_document_scanner/src/bloc/edit/edit_bloc.dart';
 import 'package:flutter_document_scanner/src/ui/widgets/button_take_photo.dart';
+import 'package:flutter_document_scanner/src/utils/model_utils.dart';
 import 'package:flutter_document_scanner/src/utils/take_photo_document_style.dart';
 
 /// Page to take a photo
@@ -21,6 +26,7 @@ class TakePhotoDocumentPage extends StatelessWidget {
     required this.initialCameraLensDirection,
     required this.resolutionCamera,
     required this.onScannerClose,
+    required this.onSave,
   });
 
   /// Style of the page
@@ -33,6 +39,8 @@ class TakePhotoDocumentPage extends StatelessWidget {
   final ResolutionPreset resolutionCamera;
 
   final VoidCallback onScannerClose;
+
+  final OnSave onSave;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +64,8 @@ class TakePhotoDocumentPage extends StatelessWidget {
           case AppStatus.success:
             return _CameraPreview(
                 takePhotoDocumentStyle: takePhotoDocumentStyle,
-                onScannerClose: onScannerClose);
+                onScannerClose: onScannerClose,
+                onSave: onSave);
 
           case AppStatus.failure:
             return Container();
@@ -68,10 +77,14 @@ class TakePhotoDocumentPage extends StatelessWidget {
 
 class _CameraPreview extends StatelessWidget {
   const _CameraPreview(
-      {required this.takePhotoDocumentStyle, required this.onScannerClose});
+      {required this.takePhotoDocumentStyle,
+      required this.onScannerClose,
+      required this.onSave});
 
   final TakePhotoDocumentStyle takePhotoDocumentStyle;
   final VoidCallback onScannerClose;
+
+  final OnSave onSave;
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +102,13 @@ class _CameraPreview extends StatelessWidget {
         return Stack(
           fit: StackFit.expand,
           children: [
+            BlocSelector<EditBloc, EditState, Uint8List?>(
+              selector: (state) => state.image,
+              builder: (context, image) {
+                onSave(image!);
+                return const SizedBox.shrink();
+              },
+            ),
             // * Camera
             Positioned(
               top: takePhotoDocumentStyle.top,
