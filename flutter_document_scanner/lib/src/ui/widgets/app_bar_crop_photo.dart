@@ -58,9 +58,12 @@ class AppBarCropPhoto extends StatelessWidget {
 
             // * Crop photo
             GestureDetector(
-              onTap: () => context
-                  .read<DocumentScannerController>()
-                  .changePage(AppPages.takePhoto),
+              onTap: () {
+                context.read<DocumentScannerController>().cropPhoto();
+                context
+                    .read<DocumentScannerController>()
+                    .changePage(AppPages.takePhoto);
+              },
               behavior: HitTestBehavior.opaque,
               child: Padding(
                 padding: const EdgeInsets.only(right: 16),
