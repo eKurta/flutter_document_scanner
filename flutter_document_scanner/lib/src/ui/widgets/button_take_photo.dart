@@ -35,8 +35,8 @@ class ButtonTakePhoto extends StatelessWidget {
         child: GestureDetector(
           onTap: () => context.read<DocumentScannerController>().takePhoto(),
           child: Container(
-            height: 56,
-            width: 56,
+            height: 60,
+            width: 60,
             decoration: BoxDecoration(
               color: Colors.transparent,
               shape: BoxShape.circle,
