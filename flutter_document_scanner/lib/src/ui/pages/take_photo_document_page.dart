@@ -5,8 +5,6 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -107,18 +105,6 @@ class _CameraPreview extends StatelessWidget {
             ButtonTakePhoto(
               takePhotoDocumentStyle: takePhotoDocumentStyle,
             ),
-
-            Positioned(
-              top: Platform.isAndroid ? 32 : 48,
-              left: 16,
-              child: IconButton(
-                onPressed: onScannerClose,
-                icon: const Icon(
-                  Icons.close,
-                  color: Colors.white,
-                ),
-              ),
-            )
           ],
         );
       },
