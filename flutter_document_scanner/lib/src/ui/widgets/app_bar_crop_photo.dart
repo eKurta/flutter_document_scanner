@@ -6,6 +6,7 @@
 // https://opensource.org/licenses/MIT.
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_document_scanner/flutter_document_scanner.dart';
 
@@ -27,36 +28,51 @@ class AppBarCropPhoto extends StatelessWidget {
     }
 
     return Positioned(
-      top: 0,
+      bottom: 0,
       left: 0,
       right: 0,
-      child: Padding(
-        padding: EdgeInsets.only(
-          top: MediaQuery.of(context).padding.top + 15,
-        ),
+      child: Container(
+        height: 50,
+        color: Colors.black,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconButton(
-              onPressed: () =>
-                  context.read<DocumentScannerController>().changePage(
-                        AppPages.takePhoto,
-                      ),
-              icon: const Icon(
-                Icons.close,
+            GestureDetector(
+              onTap: () => context
+                  .read<DocumentScannerController>()
+                  .changePage(AppPages.takePhoto),
+              behavior: HitTestBehavior.opaque,
+              child: const Padding(
+                padding: EdgeInsets.only(left: 16),
+                child: Text(
+                  'Retake',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF1E8FDA),
+                  ),
+                ),
               ),
-              color: Colors.white,
             ),
 
             // * Crop photo
-            TextButton(
-              onPressed: () =>
-                  context.read<DocumentScannerController>().cropPhoto(),
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.white,
-              ),
-              child: Text(
-                cropPhotoDocumentStyle.textButtonSave,
+            GestureDetector(
+              onTap: () => context
+                  .read<DocumentScannerController>()
+                  .changePage(AppPages.takePhoto),
+              behavior: HitTestBehavior.opaque,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: Text(
+                  cropPhotoDocumentStyle.textButtonSave,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF1E8FDA),
+                  ),
+                ),
               ),
             ),
           ],
