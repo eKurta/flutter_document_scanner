@@ -5,6 +5,8 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_document_scanner/flutter_document_scanner.dart';
@@ -61,8 +63,8 @@ class AppBarCropPhoto extends StatelessWidget {
 
             // * Crop photo
             GestureDetector(
-              onTap: () {
-                context.read<DocumentScannerController>().cropPhoto();
+              onTap: () async {
+                await context.read<DocumentScannerController>().cropPhoto();
                 onKeepScan(
                   context.read<DocumentScannerController>().pictureCropped!,
                 );
