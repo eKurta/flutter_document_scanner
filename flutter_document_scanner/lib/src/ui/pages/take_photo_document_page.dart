@@ -68,9 +68,10 @@ class TakePhotoDocumentPage extends StatelessWidget {
 
               case AppStatus.success:
                 return _CameraPreview(
-                    takePhotoDocumentStyle: takePhotoDocumentStyle,
-                    onScannerClose: onScannerClose,
-                    onSave: onSave);
+                  takePhotoDocumentStyle: takePhotoDocumentStyle,
+                  onScannerClose: onScannerClose,
+                  onSave: onSave,
+                );
 
               case AppStatus.failure:
                 return Container();
@@ -81,10 +82,11 @@ class TakePhotoDocumentPage extends StatelessWidget {
 }
 
 class _CameraPreview extends StatelessWidget {
-  const _CameraPreview(
-      {required this.takePhotoDocumentStyle,
-      required this.onScannerClose,
-      required this.onSave});
+  const _CameraPreview({
+    required this.takePhotoDocumentStyle,
+    required this.onScannerClose,
+    required this.onSave,
+  });
 
   final TakePhotoDocumentStyle takePhotoDocumentStyle;
   final VoidCallback onScannerClose;
@@ -116,6 +118,13 @@ class _CameraPreview extends StatelessWidget {
                   );
                 }
                 onSave(state);
+
+                context.read<AppBloc>().add(
+                      AppNewEditedImageLoaded(
+                        isSuccess: true,
+                      ),
+                    );
+
                 return const SizedBox.shrink();
               },
             ),
