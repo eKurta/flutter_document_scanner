@@ -98,6 +98,15 @@ class AppPhotoCropped extends AppEvent {
   List<Object?> get props => [];
 }
 
+/// Event to crop the photo
+class AppPhotoCroppedDone extends AppEvent {
+  /// Create an event instance
+  AppPhotoCroppedDone();
+
+  @override
+  List<Object?> get props => [];
+}
+
 /// Event to load the cropped photo in page [AppPages.editDocument]
 class AppLoadCroppedPhoto extends AppEvent {
   /// Create an event instance

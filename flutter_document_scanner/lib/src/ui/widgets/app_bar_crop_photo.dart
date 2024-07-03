@@ -65,6 +65,7 @@ class AppBarCropPhoto extends StatelessWidget {
             GestureDetector(
               onTap: () async {
                 await context.read<DocumentScannerController>().cropPhoto();
+                context.read<DocumentScannerController>().cropPhotoDone();
                 onKeepScan(
                   context.read<DocumentScannerController>().pictureCropped!,
                 );

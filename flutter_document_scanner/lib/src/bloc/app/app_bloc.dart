@@ -31,6 +31,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppExternalImageContoursFound>(_externalImageContoursFound);
     on<AppPageChanged>(_pageChanged);
     on<AppPhotoCropped>(_photoCropped);
+    on<AppPhotoCroppedDone>(_photoCropDone);
     on<AppLoadCroppedPhoto>(_loadCroppedPhoto);
     on<AppFilterApplied>(_filterApplied);
     on<AppNewEditedImageLoaded>(_newEditedImageLoaded);
@@ -204,6 +205,20 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     emit(
       state.copyWith(
         statusCropPhoto: AppStatus.loading,
+      ),
+    );
+  }
+
+  /// It will change the state and
+  /// execute the event [CropPhotoByAreaCropped] to crop the image that is in
+  /// the [CropBloc].
+  Future<void> _photoCropDone(
+    AppPhotoCroppedDone event,
+    Emitter<AppState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        statusCropPhoto: AppStatus.success,
       ),
     );
   }

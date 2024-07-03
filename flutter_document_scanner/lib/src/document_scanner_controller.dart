@@ -130,6 +130,12 @@ class DocumentScannerController {
     _appBloc.add(AppPhotoCropped());
   }
 
+  /// Cutting the photo and adjusting the perspective
+  /// then change page to [AppPages.editDocument]
+  Future<void> cropPhotoDone() async {
+    _appBloc.add(AppPhotoCroppedDone());
+  }
+
   /// Apply [FilterType] using OpenCV
   Future<void> applyFilter(FilterType type) async {
     _appBloc.add(AppFilterApplied(filter: type));
