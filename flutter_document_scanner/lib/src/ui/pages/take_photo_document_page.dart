@@ -109,20 +109,6 @@ class _CameraPreview extends StatelessWidget {
         return Stack(
           fit: StackFit.expand,
           children: [
-            // BlocSelector<AppBloc, AppState, Uint8List?>(
-            //   selector: (state) => state.pictureCropped,
-            //   builder: (context, state) {
-            //     if (state == null) {
-            //       return const Center(
-            //         child: Text('NO IMAGE'),
-            //       );
-            //     }
-            //     onSave(state);
-
-            //     return const SizedBox.shrink();
-            //   },
-            // ),
-
             // * Camera
             Positioned(
               top: takePhotoDocumentStyle.top,

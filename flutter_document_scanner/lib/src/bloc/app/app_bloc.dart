@@ -221,11 +221,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       ),
     );
 
-    emit(
-      state.copyWith(
-        currentPage: AppPages.takePhoto,
-      ),
-    );
+    // emit(
+    //   state.copyWith(
+    //     currentPage: AppPages.takePhoto,
+    //   ),
+    // );
   }
 
   /// It will change the state and
