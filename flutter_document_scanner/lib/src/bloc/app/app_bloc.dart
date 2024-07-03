@@ -7,6 +7,7 @@
 
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
 import 'package:camera/camera.dart';
@@ -222,7 +223,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
     emit(
       state.copyWith(
-        currentPage: AppPages.editDocument,
+        currentPage: AppPages.takePhoto,
       ),
     );
   }

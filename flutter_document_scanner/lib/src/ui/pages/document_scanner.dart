@@ -38,6 +38,7 @@ class DocumentScanner extends StatelessWidget {
       this.editPhotoDocumentStyle = const EditPhotoDocumentStyle(),
       required this.onSave,
       required this.onAddMore,
+      required this.onKeepScan,
       required this.onScannerClose});
 
   /// Controller to execute the different functionalities
@@ -73,6 +74,8 @@ class DocumentScanner extends StatelessWidget {
   /// After performing the whole process of capturing the document
   /// It will return it as [Uint8List].
   final OnSave onSave;
+
+  final OnKeepScan onKeepScan;
 
   ///On add more button pressed
   final OnAddMore onAddMore;
@@ -184,6 +187,7 @@ class DocumentScanner extends StatelessWidget {
               cropPhotoDocumentStyle: cropPhotoDocumentStyle,
               editPhotoDocumentStyle: editPhotoDocumentStyle,
               onSave: onSave,
+              onKeepScan: onKeepScan,
               onAddMore: onAddMore,
               initialCameraLensDirection: initialCameraLensDirection,
               resolutionCamera: resolutionCamera,
@@ -205,6 +209,7 @@ class _View extends StatelessWidget {
       required this.editPhotoDocumentStyle,
       required this.onSave,
       required this.onAddMore,
+      required this.onKeepScan,
       required this.initialCameraLensDirection,
       required this.resolutionCamera,
       required this.onScannerClose});
@@ -218,6 +223,7 @@ class _View extends StatelessWidget {
   final CameraLensDirection initialCameraLensDirection;
   final ResolutionPreset resolutionCamera;
   final OnAddMore onAddMore;
+  final OnKeepScan onKeepScan;
   final VoidCallback onScannerClose;
 
   @override
@@ -251,8 +257,8 @@ class _View extends StatelessWidget {
 
           case AppPages.cropPhoto:
             page = CropPhotoDocumentPage(
-              cropPhotoDocumentStyle: cropPhotoDocumentStyle,
-            );
+                cropPhotoDocumentStyle: cropPhotoDocumentStyle,
+                onKeepScan: onKeepScan);
             break;
 
           case AppPages.editDocument:

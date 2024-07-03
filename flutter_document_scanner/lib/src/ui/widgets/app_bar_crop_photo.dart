@@ -6,20 +6,23 @@
 // https://opensource.org/licenses/MIT.
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_document_scanner/flutter_document_scanner.dart';
+import 'package:flutter_document_scanner/src/utils/model_utils.dart';
 
 /// Default AppBar of the Crop Photo page
 class AppBarCropPhoto extends StatelessWidget {
   /// Create a widget with style
   const AppBarCropPhoto({
     super.key,
+    required this.onKeepScan,
     required this.cropPhotoDocumentStyle,
   });
 
   /// The style of the page
   final CropPhotoDocumentStyle cropPhotoDocumentStyle;
+
+  final OnKeepScan onKeepScan;
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +63,9 @@ class AppBarCropPhoto extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 context.read<DocumentScannerController>().cropPhoto();
-                context
-                    .read<DocumentScannerController>()
-                    .changePage(AppPages.takePhoto);
+                onKeepScan(
+                  context.read<DocumentScannerController>().pictureCropped!,
+                );
               },
               behavior: HitTestBehavior.opaque,
               child: Padding(

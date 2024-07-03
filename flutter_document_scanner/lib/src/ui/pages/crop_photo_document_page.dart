@@ -21,6 +21,7 @@ import 'package:flutter_document_scanner/src/ui/widgets/mask_crop.dart';
 import 'package:flutter_document_scanner/src/utils/border_crop_area_painter.dart';
 import 'package:flutter_document_scanner/src/utils/dot_utils.dart';
 import 'package:flutter_document_scanner/src/utils/image_utils.dart';
+import 'package:flutter_document_scanner/src/utils/model_utils.dart';
 
 /// Page to crop a photo
 class CropPhotoDocumentPage extends StatelessWidget {
@@ -28,10 +29,13 @@ class CropPhotoDocumentPage extends StatelessWidget {
   const CropPhotoDocumentPage({
     super.key,
     required this.cropPhotoDocumentStyle,
+    required this.onKeepScan,
   });
 
   /// Style of the page
   final CropPhotoDocumentStyle cropPhotoDocumentStyle;
+
+  final OnKeepScan onKeepScan;
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +75,7 @@ class CropPhotoDocumentPage extends StatelessWidget {
             child: _CropView(
               cropPhotoDocumentStyle: cropPhotoDocumentStyle,
               image: state,
+              onKeepScan: onKeepScan,
             ),
           );
         },
@@ -87,12 +92,13 @@ class CropPhotoDocumentPage extends StatelessWidget {
 }
 
 class _CropView extends StatelessWidget {
-  const _CropView({
-    required this.cropPhotoDocumentStyle,
-    required this.image,
-  });
+  const _CropView(
+      {required this.cropPhotoDocumentStyle,
+      required this.image,
+      required this.onKeepScan});
   final CropPhotoDocumentStyle cropPhotoDocumentStyle;
   final File image;
+  final OnKeepScan onKeepScan;
 
   @override
   Widget build(BuildContext context) {
@@ -355,8 +361,8 @@ class _CropView extends StatelessWidget {
 
           // * Default App Bar
           AppBarCropPhoto(
-            cropPhotoDocumentStyle: cropPhotoDocumentStyle,
-          ),
+              cropPhotoDocumentStyle: cropPhotoDocumentStyle,
+              onKeepScan: onKeepScan),
 
           // * children
           if (cropPhotoDocumentStyle.children != null)

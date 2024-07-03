@@ -119,8 +119,6 @@ class _CameraPreview extends StatelessWidget {
                 }
                 onSave(state);
 
-                context.read<AppBloc>().add(AppPhotoCropped());
-
                 return const SizedBox.shrink();
               },
             ),
