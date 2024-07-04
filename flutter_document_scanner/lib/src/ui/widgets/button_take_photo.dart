@@ -5,6 +5,8 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_document_scanner/src/document_scanner_controller.dart';
@@ -28,7 +30,8 @@ class ButtonTakePhoto extends StatelessWidget {
     }
 
     return Positioned(
-      bottom: 20,
+      bottom:
+          Platform.isIOS ? (MediaQuery.of(context).padding.bottom + 20) : 20,
       left: 0,
       right: 0,
       child: Center(

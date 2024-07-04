@@ -108,28 +108,30 @@ class _CameraPreview extends StatelessWidget {
 
         return ColoredBox(
           color: const Color(0xFF000F1A).withOpacity(0.3),
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              // * Camera
-              Positioned(
-                top: MediaQuery.of(context).padding.top +
-                    takePhotoDocumentStyle.top,
-                bottom: takePhotoDocumentStyle.bottom,
-                left: takePhotoDocumentStyle.left,
-                right: takePhotoDocumentStyle.right,
-                child: CameraPreview(state),
-              ),
+          child: SafeArea(
+            bottom: false,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                // * Camera
+                Positioned(
+                  top: takePhotoDocumentStyle.top,
+                  bottom: takePhotoDocumentStyle.bottom,
+                  left: takePhotoDocumentStyle.left,
+                  right: takePhotoDocumentStyle.right,
+                  child: CameraPreview(state),
+                ),
 
-              // * children
-              if (takePhotoDocumentStyle.children != null)
-                ...takePhotoDocumentStyle.children!,
+                // * children
+                if (takePhotoDocumentStyle.children != null)
+                  ...takePhotoDocumentStyle.children!,
 
-              /// Default
-              ButtonTakePhoto(
-                takePhotoDocumentStyle: takePhotoDocumentStyle,
-              ),
-            ],
+                /// Default
+                ButtonTakePhoto(
+                  takePhotoDocumentStyle: takePhotoDocumentStyle,
+                ),
+              ],
+            ),
           ),
         );
       },
