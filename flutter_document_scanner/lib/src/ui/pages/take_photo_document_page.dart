@@ -111,7 +111,8 @@ class _CameraPreview extends StatelessWidget {
           children: [
             // * Camera
             Positioned(
-              top: takePhotoDocumentStyle.top,
+              top: MediaQuery.of(context).padding.top +
+                  takePhotoDocumentStyle.top,
               bottom: takePhotoDocumentStyle.bottom,
               left: takePhotoDocumentStyle.left,
               right: takePhotoDocumentStyle.right,
