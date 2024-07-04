@@ -128,246 +128,255 @@ class _CropView extends StatelessWidget {
           },
         ),
       ],
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          Positioned(
-            top: cropPhotoDocumentStyle.top,
-            bottom: cropPhotoDocumentStyle.bottom,
-            left: cropPhotoDocumentStyle.left,
-            right: cropPhotoDocumentStyle.right,
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                // * Photo
-                Positioned.fill(
-                  child: Image.file(
-                    image,
-                    fit: BoxFit.fill,
+      child: SafeArea(
+        top: false,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Positioned(
+              top: cropPhotoDocumentStyle.top,
+              bottom: cropPhotoDocumentStyle.bottom,
+              left: cropPhotoDocumentStyle.left,
+              right: cropPhotoDocumentStyle.right,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  // * Photo
+                  Positioned.fill(
+                    child: Image.file(
+                      image,
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                ),
 
-                // * Mask
-                BlocSelector<CropBloc, CropState, Area>(
-                  selector: (state) => state.area,
-                  builder: (context, state) {
-                    return MaskCrop(
-                      area: state,
-                      cropPhotoDocumentStyle: cropPhotoDocumentStyle,
-                    );
-                  },
-                ),
-
-                // * Border Mask
-                BlocSelector<CropBloc, CropState, Area>(
-                  selector: (state) => state.area,
-                  builder: (context, state) {
-                    return CustomPaint(
-                      painter: BorderCropAreaPainter(
+                  // * Mask
+                  BlocSelector<CropBloc, CropState, Area>(
+                    selector: (state) => state.area,
+                    builder: (context, state) {
+                      return MaskCrop(
                         area: state,
-                        colorBorderArea: cropPhotoDocumentStyle.colorBorderArea,
-                        widthBorderArea: cropPhotoDocumentStyle.widthBorderArea,
-                      ),
-                      child: const SizedBox.expand(),
-                    );
-                  },
-                ),
+                        cropPhotoDocumentStyle: cropPhotoDocumentStyle,
+                      );
+                    },
+                  ),
 
-                // * Dot - All
-                BlocSelector<CropBloc, CropState, Area>(
-                  selector: (state) => state.area,
-                  builder: (context, state) {
-                    return GestureDetector(
-                      onPanUpdate: (details) {
-                        context.read<CropBloc>().add(
-                              CropDotMoved(
-                                deltaX: details.delta.dx,
-                                deltaY: details.delta.dy,
-                                dotPosition: DotPosition.all,
-                              ),
-                            );
-                      },
-                      child: Container(
-                        color: Colors.transparent,
-                        width: state.topLeft.x + state.topRight.x,
-                        height: state.topLeft.y + state.topRight.y,
-                      ),
-                    );
-                  },
-                ),
+                  // * Border Mask
+                  BlocSelector<CropBloc, CropState, Area>(
+                    selector: (state) => state.area,
+                    builder: (context, state) {
+                      return CustomPaint(
+                        painter: BorderCropAreaPainter(
+                          area: state,
+                          colorBorderArea:
+                              cropPhotoDocumentStyle.colorBorderArea,
+                          widthBorderArea:
+                              cropPhotoDocumentStyle.widthBorderArea,
+                        ),
+                        child: const SizedBox.expand(),
+                      );
+                    },
+                  ),
 
-                // * Dot - Top Left
-                BlocSelector<CropBloc, CropState, Point>(
-                  selector: (state) => state.area.topLeft,
-                  builder: (context, state) {
-                    return Positioned(
-                      left: state.x - (cropPhotoDocumentStyle.dotSize / 2),
-                      top: state.y - (cropPhotoDocumentStyle.dotSize / 2),
-                      child: GestureDetector(
+                  // * Dot - All
+                  BlocSelector<CropBloc, CropState, Area>(
+                    selector: (state) => state.area,
+                    builder: (context, state) {
+                      return GestureDetector(
                         onPanUpdate: (details) {
                           context.read<CropBloc>().add(
                                 CropDotMoved(
                                   deltaX: details.delta.dx,
                                   deltaY: details.delta.dy,
-                                  dotPosition: DotPosition.topLeft,
+                                  dotPosition: DotPosition.all,
                                 ),
                               );
                         },
                         child: Container(
                           color: Colors.transparent,
-                          width: cropPhotoDocumentStyle.dotSize,
-                          height: cropPhotoDocumentStyle.dotSize,
-                          child: Center(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(
-                                cropPhotoDocumentStyle.dotRadius,
-                              ),
-                              child: Container(
-                                width: cropPhotoDocumentStyle.dotSize - (2 * 2),
-                                height:
-                                    cropPhotoDocumentStyle.dotSize - (2 * 2),
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
+                          width: state.topLeft.x + state.topRight.x,
+                          height: state.topLeft.y + state.topRight.y,
                         ),
-                      ),
-                    );
-                  },
-                ),
+                      );
+                    },
+                  ),
 
-                // * Dot - Top Right
-                BlocSelector<CropBloc, CropState, Point>(
-                  selector: (state) => state.area.topRight,
-                  builder: (context, state) {
-                    return Positioned(
-                      left: state.x - (cropPhotoDocumentStyle.dotSize / 2),
-                      top: state.y - (cropPhotoDocumentStyle.dotSize / 2),
-                      child: GestureDetector(
-                        onPanUpdate: (details) {
-                          context.read<CropBloc>().add(
-                                CropDotMoved(
-                                  deltaX: details.delta.dx,
-                                  deltaY: details.delta.dy,
-                                  dotPosition: DotPosition.topRight,
+                  // * Dot - Top Left
+                  BlocSelector<CropBloc, CropState, Point>(
+                    selector: (state) => state.area.topLeft,
+                    builder: (context, state) {
+                      return Positioned(
+                        left: state.x - (cropPhotoDocumentStyle.dotSize / 2),
+                        top: state.y - (cropPhotoDocumentStyle.dotSize / 2),
+                        child: GestureDetector(
+                          onPanUpdate: (details) {
+                            context.read<CropBloc>().add(
+                                  CropDotMoved(
+                                    deltaX: details.delta.dx,
+                                    deltaY: details.delta.dy,
+                                    dotPosition: DotPosition.topLeft,
+                                  ),
+                                );
+                          },
+                          child: Container(
+                            color: Colors.transparent,
+                            width: cropPhotoDocumentStyle.dotSize,
+                            height: cropPhotoDocumentStyle.dotSize,
+                            child: Center(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(
+                                  cropPhotoDocumentStyle.dotRadius,
                                 ),
-                              );
-                        },
-                        child: Container(
-                          color: Colors.transparent,
-                          width: cropPhotoDocumentStyle.dotSize,
-                          height: cropPhotoDocumentStyle.dotSize,
-                          child: Center(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(
-                                cropPhotoDocumentStyle.dotRadius,
-                              ),
-                              child: Container(
-                                width: cropPhotoDocumentStyle.dotSize - (2 * 2),
-                                height:
-                                    cropPhotoDocumentStyle.dotSize - (2 * 2),
-                                color: Colors.white,
+                                child: Container(
+                                  width:
+                                      cropPhotoDocumentStyle.dotSize - (2 * 2),
+                                  height:
+                                      cropPhotoDocumentStyle.dotSize - (2 * 2),
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                ),
+                      );
+                    },
+                  ),
 
-                // * Dot - Bottom Left
-                BlocSelector<CropBloc, CropState, Point>(
-                  selector: (state) => state.area.bottomLeft,
-                  builder: (context, state) {
-                    return Positioned(
-                      left: state.x - (cropPhotoDocumentStyle.dotSize / 2),
-                      top: state.y - (cropPhotoDocumentStyle.dotSize / 2),
-                      child: GestureDetector(
-                        onPanUpdate: (details) {
-                          context.read<CropBloc>().add(
-                                CropDotMoved(
-                                  deltaX: details.delta.dx,
-                                  deltaY: details.delta.dy,
-                                  dotPosition: DotPosition.bottomLeft,
+                  // * Dot - Top Right
+                  BlocSelector<CropBloc, CropState, Point>(
+                    selector: (state) => state.area.topRight,
+                    builder: (context, state) {
+                      return Positioned(
+                        left: state.x - (cropPhotoDocumentStyle.dotSize / 2),
+                        top: state.y - (cropPhotoDocumentStyle.dotSize / 2),
+                        child: GestureDetector(
+                          onPanUpdate: (details) {
+                            context.read<CropBloc>().add(
+                                  CropDotMoved(
+                                    deltaX: details.delta.dx,
+                                    deltaY: details.delta.dy,
+                                    dotPosition: DotPosition.topRight,
+                                  ),
+                                );
+                          },
+                          child: Container(
+                            color: Colors.transparent,
+                            width: cropPhotoDocumentStyle.dotSize,
+                            height: cropPhotoDocumentStyle.dotSize,
+                            child: Center(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(
+                                  cropPhotoDocumentStyle.dotRadius,
                                 ),
-                              );
-                        },
-                        child: Container(
-                          color: Colors.transparent,
-                          width: cropPhotoDocumentStyle.dotSize,
-                          height: cropPhotoDocumentStyle.dotSize,
-                          child: Center(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(
-                                cropPhotoDocumentStyle.dotRadius,
-                              ),
-                              child: Container(
-                                width: cropPhotoDocumentStyle.dotSize - (2 * 2),
-                                height:
-                                    cropPhotoDocumentStyle.dotSize - (2 * 2),
-                                color: Colors.white,
+                                child: Container(
+                                  width:
+                                      cropPhotoDocumentStyle.dotSize - (2 * 2),
+                                  height:
+                                      cropPhotoDocumentStyle.dotSize - (2 * 2),
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                ),
+                      );
+                    },
+                  ),
 
-                // * Dot - Bottom Right
-                BlocSelector<CropBloc, CropState, Point>(
-                  selector: (state) => state.area.bottomRight,
-                  builder: (context, state) {
-                    return Positioned(
-                      left: state.x - (cropPhotoDocumentStyle.dotSize / 2),
-                      top: state.y - (cropPhotoDocumentStyle.dotSize / 2),
-                      child: GestureDetector(
-                        onPanUpdate: (details) {
-                          context.read<CropBloc>().add(
-                                CropDotMoved(
-                                  deltaX: details.delta.dx,
-                                  deltaY: details.delta.dy,
-                                  dotPosition: DotPosition.bottomRight,
+                  // * Dot - Bottom Left
+                  BlocSelector<CropBloc, CropState, Point>(
+                    selector: (state) => state.area.bottomLeft,
+                    builder: (context, state) {
+                      return Positioned(
+                        left: state.x - (cropPhotoDocumentStyle.dotSize / 2),
+                        top: state.y - (cropPhotoDocumentStyle.dotSize / 2),
+                        child: GestureDetector(
+                          onPanUpdate: (details) {
+                            context.read<CropBloc>().add(
+                                  CropDotMoved(
+                                    deltaX: details.delta.dx,
+                                    deltaY: details.delta.dy,
+                                    dotPosition: DotPosition.bottomLeft,
+                                  ),
+                                );
+                          },
+                          child: Container(
+                            color: Colors.transparent,
+                            width: cropPhotoDocumentStyle.dotSize,
+                            height: cropPhotoDocumentStyle.dotSize,
+                            child: Center(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(
+                                  cropPhotoDocumentStyle.dotRadius,
                                 ),
-                              );
-                        },
-                        child: Container(
-                          color: Colors.transparent,
-                          width: cropPhotoDocumentStyle.dotSize,
-                          height: cropPhotoDocumentStyle.dotSize,
-                          child: Center(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(
-                                cropPhotoDocumentStyle.dotRadius,
-                              ),
-                              child: Container(
-                                width: cropPhotoDocumentStyle.dotSize - (2 * 2),
-                                height:
-                                    cropPhotoDocumentStyle.dotSize - (2 * 2),
-                                color: Colors.white,
+                                child: Container(
+                                  width:
+                                      cropPhotoDocumentStyle.dotSize - (2 * 2),
+                                  height:
+                                      cropPhotoDocumentStyle.dotSize - (2 * 2),
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                ),
-              ],
+                      );
+                    },
+                  ),
+
+                  // * Dot - Bottom Right
+                  BlocSelector<CropBloc, CropState, Point>(
+                    selector: (state) => state.area.bottomRight,
+                    builder: (context, state) {
+                      return Positioned(
+                        left: state.x - (cropPhotoDocumentStyle.dotSize / 2),
+                        top: state.y - (cropPhotoDocumentStyle.dotSize / 2),
+                        child: GestureDetector(
+                          onPanUpdate: (details) {
+                            context.read<CropBloc>().add(
+                                  CropDotMoved(
+                                    deltaX: details.delta.dx,
+                                    deltaY: details.delta.dy,
+                                    dotPosition: DotPosition.bottomRight,
+                                  ),
+                                );
+                          },
+                          child: Container(
+                            color: Colors.transparent,
+                            width: cropPhotoDocumentStyle.dotSize,
+                            height: cropPhotoDocumentStyle.dotSize,
+                            child: Center(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(
+                                  cropPhotoDocumentStyle.dotRadius,
+                                ),
+                                child: Container(
+                                  width:
+                                      cropPhotoDocumentStyle.dotSize - (2 * 2),
+                                  height:
+                                      cropPhotoDocumentStyle.dotSize - (2 * 2),
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
 
-          // * Default App Bar
-          AppBarCropPhoto(
-              cropPhotoDocumentStyle: cropPhotoDocumentStyle,
-              onKeepScan: onKeepScan),
+            // * Default App Bar
+            AppBarCropPhoto(
+                cropPhotoDocumentStyle: cropPhotoDocumentStyle,
+                onKeepScan: onKeepScan),
 
-          // * children
-          if (cropPhotoDocumentStyle.children != null)
-            ...cropPhotoDocumentStyle.children!,
-        ],
+            // * children
+            if (cropPhotoDocumentStyle.children != null)
+              ...cropPhotoDocumentStyle.children!,
+          ],
+        ),
       ),
     );
   }

@@ -33,60 +33,58 @@ class AppBarCropPhoto extends StatelessWidget {
     }
 
     return Positioned(
-      bottom: 0,
+      bottom: cropPhotoDocumentStyle.bottom,
       left: 0,
       right: 0,
       child: Container(
         height: 50,
         color: Colors.black,
-        child: SafeArea(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GestureDetector(
-                onTap: () => context
-                    .read<DocumentScannerController>()
-                    .changePage(AppPages.takePhoto),
-                behavior: HitTestBehavior.opaque,
-                child: const Padding(
-                  padding: EdgeInsets.only(left: 16),
-                  child: Text(
-                    'Retake',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF1E8FDA),
-                    ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GestureDetector(
+              onTap: () => context
+                  .read<DocumentScannerController>()
+                  .changePage(AppPages.takePhoto),
+              behavior: HitTestBehavior.opaque,
+              child: const Padding(
+                padding: EdgeInsets.only(left: 16),
+                child: Text(
+                  'Retake',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF1E8FDA),
                   ),
                 ),
               ),
+            ),
 
-              // * Crop photo
-              GestureDetector(
-                onTap: () async {
-                  context.read<DocumentScannerController>().cropPhoto();
-                  context.read<DocumentScannerController>().cropPhotoDone();
-                  onKeepScan(
-                    context.read<DocumentScannerController>().pictureCropped!,
-                  );
-                },
-                behavior: HitTestBehavior.opaque,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 16),
-                  child: Text(
-                    cropPhotoDocumentStyle.textButtonSave,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF1E8FDA),
-                    ),
+            // * Crop photo
+            GestureDetector(
+              onTap: () async {
+                context.read<DocumentScannerController>().cropPhoto();
+                context.read<DocumentScannerController>().cropPhotoDone();
+                onKeepScan(
+                  context.read<DocumentScannerController>().pictureCropped!,
+                );
+              },
+              behavior: HitTestBehavior.opaque,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: Text(
+                  cropPhotoDocumentStyle.textButtonSave,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF1E8FDA),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
