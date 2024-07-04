@@ -68,19 +68,15 @@ class AppBarCropPhoto extends StatelessWidget {
             BlocSelector<AppBloc, AppState, Uint8List?>(
               selector: (state) => state.pictureCropped,
               builder: (context, state) {
-                if (state == null) {
-                  return const Center(
-                    child: Text('NO IMAGE'),
-                  );
-                }
-
                 return GestureDetector(
                   onTap: () async {
                     await context.read<DocumentScannerController>().cropPhoto();
                     context.read<DocumentScannerController>().cropPhotoDone();
-                    onKeepScan(
-                      state,
-                    );
+                    if (state == null) {
+                      onKeepScan(
+                        state!,
+                      );
+                    }
                   },
                   behavior: HitTestBehavior.opaque,
                   child: Padding(
