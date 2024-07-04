@@ -7,9 +7,12 @@
 
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_document_scanner/flutter_document_scanner.dart';
+import 'package:flutter_document_scanner/src/bloc/app/app_bloc.dart';
 import 'package:flutter_document_scanner/src/utils/model_utils.dart';
 
 /// Default AppBar of the Crop Photo page
@@ -62,27 +65,38 @@ class AppBarCropPhoto extends StatelessWidget {
             ),
 
             // * Crop photo
-            GestureDetector(
-              onTap: () async {
-                await context.read<DocumentScannerController>().cropPhoto();
-                await context.read<DocumentScannerController>().cropPhotoDone();
-                onKeepScan(
-                  context.read<DocumentScannerController>().pictureCropped!,
+            BlocSelector<AppBloc, AppState, Uint8List?>(
+              selector: (state) => state.pictureCropped,
+              builder: (context, state) {
+                if (state == null) {
+                  return const Center(
+                    child: Text('NO IMAGE'),
+                  );
+                }
+
+                return GestureDetector(
+                  onTap: () async {
+                    await context.read<DocumentScannerController>().cropPhoto();
+                    context.read<DocumentScannerController>().cropPhotoDone();
+                    onKeepScan(
+                      state,
+                    );
+                  },
+                  behavior: HitTestBehavior.opaque,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: Text(
+                      cropPhotoDocumentStyle.textButtonSave,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFF1E8FDA),
+                      ),
+                    ),
+                  ),
                 );
               },
-              behavior: HitTestBehavior.opaque,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: Text(
-                  cropPhotoDocumentStyle.textButtonSave,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF1E8FDA),
-                  ),
-                ),
-              ),
             ),
           ],
         ),
