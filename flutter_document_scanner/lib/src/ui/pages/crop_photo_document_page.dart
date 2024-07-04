@@ -124,6 +124,8 @@ class _CropView extends StatelessWidget {
                       area: state.areaParsed!,
                     ),
                   );
+
+              onKeepScan(state.imageCropped!);
             }
           },
         ),
