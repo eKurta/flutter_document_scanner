@@ -72,11 +72,6 @@ class AppBarCropPhoto extends StatelessWidget {
                   onTap: () async {
                     await context.read<DocumentScannerController>().cropPhoto();
                     context.read<DocumentScannerController>().cropPhotoDone();
-                    // if (state == null) {
-                    //   onKeepScan(
-                    //     state!,
-                    //   );
-                    // }
                   },
                   behavior: HitTestBehavior.opaque,
                   child: Padding(
