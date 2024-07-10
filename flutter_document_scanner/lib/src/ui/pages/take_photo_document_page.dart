@@ -107,7 +107,7 @@ class _CameraPreview extends StatelessWidget {
         }
 
         return ColoredBox(
-          color: const Color(0xFF000F1A),
+          color: const Color(0xFFB2B7BA),
           child: SafeArea(
             bottom: false,
             child: Stack(
