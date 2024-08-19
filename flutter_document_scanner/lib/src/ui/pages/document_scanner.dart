@@ -38,7 +38,7 @@ class DocumentScanner extends StatelessWidget {
       this.editPhotoDocumentStyle = const EditPhotoDocumentStyle(),
       required this.onSave,
       required this.onAddMore,
-      required this.onKeepScan,
+      this.onKeepScan,
       required this.onScannerClose});
 
   /// Controller to execute the different functionalities
@@ -75,7 +75,7 @@ class DocumentScanner extends StatelessWidget {
   /// It will return it as [Uint8List].
   final OnSave onSave;
 
-  final OnKeepScan onKeepScan;
+  final OnKeepScan? onKeepScan;
 
   ///On add more button pressed
   final OnAddMore onAddMore;
@@ -209,7 +209,7 @@ class _View extends StatelessWidget {
       required this.editPhotoDocumentStyle,
       required this.onSave,
       required this.onAddMore,
-      required this.onKeepScan,
+      this.onKeepScan,
       required this.initialCameraLensDirection,
       required this.resolutionCamera,
       required this.onScannerClose});
@@ -223,7 +223,7 @@ class _View extends StatelessWidget {
   final CameraLensDirection initialCameraLensDirection;
   final ResolutionPreset resolutionCamera;
   final OnAddMore onAddMore;
-  final OnKeepScan onKeepScan;
+  final OnKeepScan? onKeepScan;
   final VoidCallback onScannerClose;
 
   @override

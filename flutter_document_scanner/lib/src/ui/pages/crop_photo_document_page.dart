@@ -5,6 +5,8 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+// ignore_for_file: prefer_null_aware_method_calls
+
 import 'dart:io';
 import 'dart:math';
 
@@ -29,13 +31,13 @@ class CropPhotoDocumentPage extends StatelessWidget {
   const CropPhotoDocumentPage({
     super.key,
     required this.cropPhotoDocumentStyle,
-    required this.onKeepScan,
+    this.onKeepScan,
   });
 
   /// Style of the page
   final CropPhotoDocumentStyle cropPhotoDocumentStyle;
 
-  final OnKeepScan onKeepScan;
+  final OnKeepScan? onKeepScan;
 
   @override
   Widget build(BuildContext context) {
@@ -95,10 +97,10 @@ class _CropView extends StatelessWidget {
   const _CropView(
       {required this.cropPhotoDocumentStyle,
       required this.image,
-      required this.onKeepScan});
+      this.onKeepScan});
   final CropPhotoDocumentStyle cropPhotoDocumentStyle;
   final File image;
-  final OnKeepScan onKeepScan;
+  final OnKeepScan? onKeepScan;
 
   @override
   Widget build(BuildContext context) {
@@ -124,8 +126,9 @@ class _CropView extends StatelessWidget {
                       area: state.areaParsed!,
                     ),
                   );
-
-              onKeepScan(state.imageCropped!);
+              if (onKeepScan != null) {
+                onKeepScan!(state.imageCropped!);
+              }
             }
           },
         ),
@@ -373,8 +376,8 @@ class _CropView extends StatelessWidget {
 
               // * Default App Bar
               AppBarCropPhoto(
-                  cropPhotoDocumentStyle: cropPhotoDocumentStyle,
-                  onKeepScan: onKeepScan),
+                cropPhotoDocumentStyle: cropPhotoDocumentStyle,
+              ),
 
               // * children
               if (cropPhotoDocumentStyle.children != null)
