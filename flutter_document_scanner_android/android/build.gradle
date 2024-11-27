@@ -27,6 +27,8 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 33
 
+    namespace "com.christian.flutterDocumentScanner"
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -43,6 +45,11 @@ android {
     defaultConfig {
         minSdkVersion 16
     }
+
+    
+    
+ 
+}
 }
 
 dependencies {
