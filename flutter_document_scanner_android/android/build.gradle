@@ -2,7 +2,7 @@ group 'com.christian.flutterDocumentScanner'
 version '1.0-SNAPSHOT'
 
 buildscript {
-     namespace 'com.christian.flutterDocumentScanner'
+    namespace 'com.christian.flutterDocumentScanner'
     ext.kotlin_version = '1.8.20'
     repositories {
         google()
